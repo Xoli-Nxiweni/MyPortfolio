@@ -1,0 +1,242 @@
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    min-height: 100vh;
+  }
+  
+  .about-header {
+    margin-bottom: 3rem;
+  }
+  
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  @media (min-width: 768px) {
+    .about-content {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .about-text p {
+    color: var(--muted-text);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .about-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .about-image:hover img {
+    transform: scale(1.05);
+  }
+  
+  .skills-container {
+    margin-top: 4rem;
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .skills-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .skill-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+  }
+  
+  .skill-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .skill-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+  }
+  
+  .skill-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted-text);
+  }
+  
+  .skill-item::before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+  
+  .experience-container {
+    margin-top: 4rem;
+  }
+  
+  .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .timeline::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    background-color: var(--border-color);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: 9px;
+  }
+  
+  @media (min-width: 768px) {
+    .timeline::after {
+      left: 50%;
+      margin-left: -1px;
+    }
+  }
+  
+  .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  @media (min-width: 768px) {
+    .timeline-item {
+      width: 50%;
+    }
+  
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+  
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+  }
+  
+  .timeline-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    z-index: 1;
+    left: 0;
+    top: 15px;
+  }
+  
+  @media (min-width: 768px) {
+    .timeline-item:nth-child(odd) .timeline-dot {
+      right: -10px;
+      left: auto;
+    }
+  
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -10px;
+    }
+  }
+  
+  .timeline-content {
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+  }
+  
+  .timeline-date {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-company {
+    color: var(--muted-text);
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-description {
+    color: var(--muted-text);
+  }
+  
