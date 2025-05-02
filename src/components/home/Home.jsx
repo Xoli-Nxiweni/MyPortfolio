@@ -1,28 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
-import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
-// Import additional Prism language components
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-java";
-import "prismjs/components/prism-python";
-import "prismjs/components/prism-csharp";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaEnvelope,
-  FaDownload,
-} from "react-icons/fa";
-import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi";
-import Resume from "../../assets/Xolile-Nxiweni-myCV.pdf";
-import "./Home.css";
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import Prism from "prismjs"
+import "prismjs/themes/prism-tomorrow.css"
+import "prismjs/components/prism-typescript"
+import "prismjs/components/prism-java"
+import "prismjs/components/prism-python"
+import "prismjs/components/prism-csharp"
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp } from "react-icons/fa"
+import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi"
+import Resume from "../../assets/Xolile-Nxiweni-myCV.pdf"
+import "./Home.css"
 
 const Home = () => {
-  const [isClosed, setIsClosed] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState("javascript");
-  
-  // Code samples for different languages
+  const [isClosed, setIsClosed] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [currentLanguage, setCurrentLanguage] = useState("javascript")
+  const [techIcons, setTechIcons] = useState([])
+  const [rgbPosition, setRgbPosition] = useState(0)
+  const [rgbActive, setRgbActive] = useState(true)
+  const codeWindowRef = useRef(null)
+
   const codeSamples = {
     javascript: `class Developer {
   constructor() {
@@ -115,69 +114,11 @@ const Home = () => {
     return "Innovative & Efficient";
   }
 }`
-  };
+  }
 
-  const [code, setCode] = useState(codeSamples.javascript);
-  const codeDisplayRef = useRef(null);
-  const codeWindowRef = useRef(null);
-  const [rgbPosition, setRgbPosition] = useState(0);
-  const [rgbActive, setRgbActive] = useState(true);
+  const [code, setCode] = useState(codeSamples.javascript)
+  const codeDisplayRef = useRef(null)
 
-  // Handle language change
-  const handleLanguageChange = (e) => {
-    const lang = e.target.value;
-    setCurrentLanguage(lang);
-    setCode(codeSamples[lang]);
-  };
-
-  // Handle fullscreen toggle
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      codeWindowRef.current?.requestFullscreen().then(() => setIsFullscreen(true)).catch(console.error);
-    } else {
-      document.exitFullscreen().then(() => setIsFullscreen(false)).catch(console.error);
-    }
-  };
-
-  // Highlight code using Prism.js
-  useEffect(() => {
-    if (codeDisplayRef.current) {
-      codeDisplayRef.current.innerHTML = Prism.highlight(
-        code,
-        Prism.languages[currentLanguage],
-        currentLanguage
-      );
-    }
-  }, [code, currentLanguage]);
-
-  // Listen for fullscreen changes
-  useEffect(() => {
-    const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  }, []);
-
-  // Handle RGB background animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (rgbActive) {
-        setRgbPosition(prev => (prev + 1) % 360);
-      }
-    }, 50);
-    
-    return () => clearInterval(interval);
-  }, [rgbActive]);
-
-  useEffect(() => {
-    // Toggle RGB lights on/off every 30 seconds
-    const toggleInterval = setInterval(() => {
-      setRgbActive(prev => !prev);
-    }, 30000);
-    
-    return () => clearInterval(toggleInterval);
-  }, []);
-
-  // Tech stack data - Updated as requested
   const techStack = [
     { name: "React", icon: "react/react-original" },
     { name: "Node.js", icon: "nodejs/nodejs-original" },
@@ -191,36 +132,115 @@ const Home = () => {
     { name: "CSS3", icon: "css3/css3-original" },
     { name: "SQLite", icon: "sqlite/sqlite-original" },
     { name: "GitHub", icon: "github/github-original" },
-  ];
+  ]
+
+  const handleLanguageChange = (e) => {
+    const lang = e.target.value
+    setCurrentLanguage(lang)
+    setCode(codeSamples[lang])
+  }
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      codeWindowRef.current?.requestFullscreen()
+        .then(() => setIsFullscreen(true))
+        .catch(console.error)
+    } else {
+      document.exitFullscreen()
+        .then(() => setIsFullscreen(false))
+        .catch(console.error)
+    }
+  }
+
+  useEffect(() => {
+    if (codeDisplayRef.current) {
+      codeDisplayRef.current.innerHTML = Prism.highlight(
+        code,
+        Prism.languages[currentLanguage],
+        currentLanguage
+      )
+    }
+  }, [code, currentLanguage])
+
+  useEffect(() => {
+    const handleFullscreenChange = () => 
+      setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener("fullscreenchange", handleFullscreenChange)
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (rgbActive) setRgbPosition((prev) => (prev + 1) % 360)
+    }, 50)
+
+    return () => clearInterval(interval)
+  }, [rgbActive])
+
+  useEffect(() => {
+    const toggleInterval = setInterval(() => {
+      setRgbActive((prev) => !prev)
+    }, 30000)
+
+    return () => clearInterval(toggleInterval)
+  }, [])
+
+  useEffect(() => {
+    const icons = techStack.map((tech, index) => ({
+      id: index,
+      name: tech.name,
+      icon: tech.icon,
+      angle: (Math.PI * 2 * index) / techStack.length,
+      radius: 150 + Math.random() * 100,
+      speed: 0.002 + Math.random() * 0.003,
+      size: 30 + Math.random() * 15,
+      yOffset: 0,
+      pulse: Math.random() * 2
+    }))
+    setTechIcons(icons)
+  }, [])
+
+  useEffect(() => {
+    let animationFrameId
+    const animate = () => {
+      setTechIcons((prevIcons) => 
+        prevIcons.map((icon) => ({
+          ...icon,
+          angle: icon.angle + icon.speed,
+          yOffset: Math.sin(Date.now() * 0.002 + icon.id) * 20,
+          pulse: icon.pulse + 0.01
+        }))
+      )
+      animationFrameId = requestAnimationFrame(animate)
+    }
+    animationFrameId = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [])
 
   return (
-    <div id="homeSection" className={`homeScreen ${rgbActive ? 'rgb-active' : ''}`} style={{"--rgb-position": `${rgbPosition}deg`}}>
-      {/* Header */}
+    <div
+      id="homeSection"
+      className={`homeScreen ${rgbActive ? "rgb-active" : ""}`}
+      style={{ "--rgb-position": `${rgbPosition}deg` }}
+    >
       <header className="header">
         <a href={Resume} download className="resume-btn">
           <FaDownload /> Download Resume
         </a>
       </header>
 
-      {/* Main Content */}
       <main className="main-content">
-        {/* Left Section */}
         <div className="left-section">
           <h1 className="name">
             Hi, I'm <span className="highlight">Xoli</span> Nxiweni
           </h1>
           <h2 className="title">A Junior Software Engineer</h2>
           <p className="bio">
-            I'm a full-stack developer focusing on MERN stack.
-            I build innovative solutions with clean, efficient code and a focus on data integrity, user experience along with user-friendly interfaces.
+            I'm a full-stack developer focusing on MERN stack. I build innovative solutions with clean, efficient code
+            and a focus on data integrity, user experience along with user-friendly interfaces.
           </p>
           <div className="social-links">
-            <a
-              href="https://github.com/Xoli-Nxiweni"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link"
-            >
+            <a href="https://github.com/Xoli-Nxiweni" target="_blank" rel="noopener noreferrer" className="social-link">
               <FaGithub />
             </a>
             <a
@@ -233,6 +253,9 @@ const Home = () => {
             </a>
             <a href="mailto:xolinxiweni@gmail.com" className="social-link">
               <FaEnvelope />
+            </a>
+            <a href="https://wa.me/+27617514638" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaWhatsapp />
             </a>
           </div>
           <div className="tech-stack">
@@ -251,23 +274,16 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Right Section */}
         <div className="right-section">
           <div className="hero-image">
             {!isClosed && (
-              <div
-                className={`code-window ${isFullscreen ? "fullscreen" : ""}`}
-                ref={codeWindowRef}
-              >
+              <div className={`code-window ${isFullscreen ? "fullscreen" : ""}`} ref={codeWindowRef}>
                 <div className="code-header">
                   <div className="code-dots">
                     <button className="code-dot close" onClick={() => setIsClosed(true)}>
                       <FiX className="window-icon" />
                     </button>
-                    <button
-                      className="code-dot minimize"
-                      onClick={() => setIsMinimized(!isMinimized)}
-                    >
+                    <button className="code-dot minimize" onClick={() => setIsMinimized(!isMinimized)}>
                       <FiMinimize2 className="window-icon" />
                     </button>
                     <button className="code-dot fullscreen" onClick={toggleFullscreen}>
@@ -297,39 +313,52 @@ const Home = () => {
               <button
                 className="restore-btn"
                 onClick={() => {
-                  setIsClosed(false);
-                  setIsMinimized(false);
+                  setIsClosed(false)
+                  setIsMinimized(false)
                 }}
               >
                 Open Code Editor
               </button>
             )}
-            <div className="tech-orbit">
-              <div className="orbit-circle"></div>
-              {techStack.map((tech, index) => (
-                <div
-                  key={index}
-                  className="tech-icon orbit-item"
-                  style={{
-                    transform: `
-                      rotate(${(360 / techStack.length) * index}deg) 
-                      translateX(180px) 
-                      rotate(-${(360 / techStack.length) * index}deg)
-                    `,
-                  }}
-                >
-                  <img
-                    src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}.svg`}
-                    alt={tech.name}
-                  />
-                </div>
-              ))}
+
+            <div className="orbital-tech-container">
+              {techIcons.map((icon) => {
+                const x = Math.cos(icon.angle) * icon.radius
+                const y = Math.sin(icon.angle) * icon.radius
+                const pulseScale = 1 + Math.sin(icon.pulse) * 0.1
+                
+                return (
+                  <div
+                    key={icon.id}
+                    className="orbital-tech-icon"
+                    style={{
+                      transform: `
+                        translate(
+                          calc(50% + ${x}px), 
+                          calc(50% + ${y}px + ${icon.yOffset}px)
+                        )
+                        scale(${pulseScale})
+                        rotate(${icon.angle * 180/Math.PI}deg)
+                      `,
+                      width: `${icon.size}px`,
+                      height: `${icon.size}px`,
+                      filter: `brightness(${1.2 + Math.abs(icon.yOffset / 30)})`,
+                      zIndex: Math.round(icon.size)
+                    }}
+                  >
+                    <img 
+                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon.icon}.svg`} 
+                      alt={icon.name}
+                    />
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

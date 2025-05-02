@@ -8,7 +8,7 @@ import Home from "./components/home/Home"
 import Profile from "./components/profile/Profile"
 import Footer from "./components/footer/Footer"
 import Projects from "./components/projects/Projects"
-import ThemeToggle from "./ThemeToggle"
+// import ThemeToggle from "./ThemeToggle"
 import "./globalStyles.css"
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div>
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
       <section id="homeSection">
         <Home />

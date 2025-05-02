@@ -6,9 +6,6 @@ const About = () => {
     <div className="about-container" id="aboutSection">
       <div className="about-header">
         <h2 className="section-title">About Me</h2>
-        <p className="section-subtitle">
-          Get to know more about me, my background, and what I do
-        </p>
       </div>
 
       <div className="about-content">
@@ -33,7 +30,7 @@ const About = () => {
         </div>
         <div className="about-image">
           <img
-            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
+            src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Developer working on code"
           />
         </div>

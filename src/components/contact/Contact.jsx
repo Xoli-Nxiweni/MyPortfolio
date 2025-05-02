@@ -38,7 +38,6 @@ const Contact = () => {
     <div className="contact-container" id="contactSection">
       <div className="contact-header">
         <h2 className="section-title">Contact Me</h2>
-        <p className="section-subtitle">Have a question or want to work together? Feel free to get in touch with me.</p>
       </div>
 
       <div className="contact-content">
@@ -55,7 +54,7 @@ const Contact = () => {
               </div>
               <div className="contact-details">
                 <h3 className="contact-method-title">Location</h3>
-                <p className="contact-method-value">Cape Town, South Africa</p>
+                <p className="contact-method-value">Johannesburg, South Africa</p>
               </div>
             </div>
 
@@ -80,15 +79,15 @@ const Contact = () => {
               <div className="contact-details">
                 <h3 className="contact-method-title">Phone</h3>
                 <p className="contact-method-value">
-                  <a href="tel:+27712345678" className="contact-method-link">
-                    +27 71 234 5678
+                  <a href="tel:+27 60 545 0493" className="contact-method-link">
+                    +27 60 545 0493
                   </a>
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="contact-social">
+          {/* <div className="contact-social">
             <a
               href="https://github.com/Xoli-Nxiweni"
               target="_blank"
@@ -113,7 +112,7 @@ const Contact = () => {
             >
               <FaTwitter />
             </a>
-          </div>
+          </div> */}
         </div>
 
         <div className="contact-form-container">
