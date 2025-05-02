@@ -17,7 +17,7 @@ import {
     FaPlane,
   } from "react-icons/fa"
   import "./Profile.css"
-  import image from "../../assets/myPhoto.JPG"
+  import image from "../../assets/IMG_5855.JPG"
   
   const Profile = () => {
     return (
