@@ -5,7 +5,8 @@ import {
     FaGlobe,
     FaGithub,
     FaLinkedin,
-    FaTwitter,
+    FaWhatsapp,
+    FaInstagram,
     FaGraduationCap,
     FaCertificate,
     FaCode,
@@ -24,7 +25,6 @@ import {
       <div className="profile-container" id="profileSection">
         <div className="profile-header">
           <h2 className="section-title">My Profile</h2>
-          <p className="section-subtitle">Personal information, education, certifications, and interests</p>
         </div>
   
         <div className="profile-content">
@@ -75,12 +75,19 @@ import {
                     <FaLinkedin />
                   </a>
                   <a
-                    href="https://twitter.com/xolinxiweni"
+                    href="https:wa.me/+27617514638"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="profile-social-link"
                   >
-                    <FaTwitter />
+                    <FaWhatsapp />
+                  </a>
+                  <a 
+                  href="https://www.instagram.com/sbala_eks/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="profile-social-link">
+                    <FaInstagram />
                   </a>
                 </div>
               </div>

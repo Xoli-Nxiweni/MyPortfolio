@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -7,9 +8,9 @@ import "prismjs/components/prism-typescript"
 import "prismjs/components/prism-java"
 import "prismjs/components/prism-python"
 import "prismjs/components/prism-csharp"
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram } from "react-icons/fa"
 import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi"
-import Resume from "../../assets/Xolile-Nxiweni-myCV.pdf"
+import Resume from "../../assets/Xolile-Nxiweni-Resume-2025.pdf"
 import "./Home.css"
 
 const Home = () => {
@@ -21,12 +22,20 @@ const Home = () => {
   const [rgbPosition, setRgbPosition] = useState(0)
   const [rgbActive, setRgbActive] = useState(true)
   const codeWindowRef = useRef(null)
+  const codeDisplayRef = useRef(null)
+  
+  // States for typing effect
+  const [displayedCode, setDisplayedCode] = useState('')
+  const [isTyping, setIsTyping] = useState(true) // Start with typing active
+  const [typingComplete, setTypingComplete] = useState(false)
+  const typingTimerRef = useRef(null)
+  const currentPosRef = useRef(0) // To track typing position between renders
 
   const codeSamples = {
     javascript: `class Developer {
   constructor() {
     this.name = 'Xoli Nxiweni';
-    this.role = 'Software Engineer';
+    this.role = 'Software Developer';
     this.skills = [
       'MERN Stack',
       'React Native',
@@ -45,7 +54,7 @@ const Home = () => {
 
   constructor() {
     this.name = 'Xoli Nxiweni';
-    this.role = 'Software Engineer';
+    this.role = 'Software Developer';
     this.skills = [
       'MERN Stack', 
       'React Native',
@@ -65,7 +74,7 @@ const Home = () => {
 
   public Developer() {
     this.name = "Xoli Nxiweni";
-    this.role = "Software Engineer";
+    this.role = "Software Developer";
     this.skills = new String[] {
       "MERN Stack", 
       "React Native",
@@ -81,7 +90,7 @@ const Home = () => {
     python: `class Developer:
   def __init__(self):
     self.name = 'Xoli Nxiweni'
-    self.role = 'Software Engineer'
+    self.role = 'Software Developer'
     self.skills = [
       'MERN Stack', 
       'React Native',
@@ -100,7 +109,7 @@ const Home = () => {
   public Developer() 
   {
     Name = "Xoli Nxiweni";
-    Role = "Software Engineer";
+    Role = "Software Developer";
     Skills = new List<string> {
       "MERN Stack",
       "React Native",
@@ -115,9 +124,6 @@ const Home = () => {
   }
 }`
   }
-
-  const [code, setCode] = useState(codeSamples.javascript)
-  const codeDisplayRef = useRef(null)
 
   const techStack = [
     { name: "React", icon: "react/react-original" },
@@ -134,10 +140,68 @@ const Home = () => {
     { name: "GitHub", icon: "github/github-original" },
   ]
 
+  // Function to start typing animation
+  const startTypingAnimation = () => {
+    // Clear any existing typing timer
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current)
+    }
+    
+    // Reset states
+    setDisplayedCode('')
+    setIsTyping(true)
+    setTypingComplete(false)
+    currentPosRef.current = 0
+    
+    // Get the code for the current language
+    const fullCode = codeSamples[currentLanguage]
+    
+    // Start the typing interval
+    typingTimerRef.current = setInterval(() => {
+      if (currentPosRef.current < fullCode.length) {
+        setDisplayedCode(fullCode.substring(0, currentPosRef.current + 1))
+        currentPosRef.current++
+      } else {
+        // Typing is complete
+        setIsTyping(false)
+        setTypingComplete(true)
+        clearInterval(typingTimerRef.current)
+      }
+    }, 10) // Faster typing speed (10ms)
+  }
+  
+  // Function to pause typing animation
+  const pauseTypingAnimation = () => {
+    if (typingTimerRef.current) {
+      clearInterval(typingTimerRef.current)
+      typingTimerRef.current = null
+    }
+  }
+  
+  // Function to resume typing animation
+  const resumeTypingAnimation = () => {
+    if (!typingComplete && typingTimerRef.current === null) {
+      const fullCode = codeSamples[currentLanguage]
+      
+      typingTimerRef.current = setInterval(() => {
+        if (currentPosRef.current < fullCode.length) {
+          setDisplayedCode(fullCode.substring(0, currentPosRef.current + 1))
+          currentPosRef.current++
+        } else {
+          // Typing is complete
+          setIsTyping(false)
+          setTypingComplete(true)
+          clearInterval(typingTimerRef.current)
+        }
+      }, 10)
+    }
+  }
+
   const handleLanguageChange = (e) => {
     const lang = e.target.value
     setCurrentLanguage(lang)
-    setCode(codeSamples[lang])
+    // Start typing animation when language changes
+    startTypingAnimation()
   }
 
   const toggleFullscreen = () => {
@@ -151,17 +215,61 @@ const Home = () => {
         .catch(console.error)
     }
   }
+  
+  const handleMinimize = () => {
+    if (!isMinimized) {
+      // If minimizing, pause the typing animation
+      pauseTypingAnimation()
+    } else {
+      // If maximizing, resume the typing animation if not complete
+      if (!typingComplete) {
+        resumeTypingAnimation()
+      }
+    }
+    setIsMinimized(!isMinimized)
+  }
 
+  // Start typing animation when component mounts
   useEffect(() => {
-    if (codeDisplayRef.current) {
+    if (!isClosed && !isMinimized) {
+      startTypingAnimation()
+    }
+    // Cleanup typing timer on unmount
+    return () => {
+      if (typingTimerRef.current) {
+        clearInterval(typingTimerRef.current)
+      }
+    }
+  }, [])
+
+  // Handle editor reopening
+  useEffect(() => {
+    if (!isClosed && !isMinimized) {
+      startTypingAnimation()
+    }
+  }, [isClosed])
+  
+  // Handle minimize/maximize state changes
+  useEffect(() => {
+    if (isMinimized) {
+      pauseTypingAnimation()
+    } else if (!isClosed && !typingComplete) {
+      resumeTypingAnimation()
+    }
+  }, [isMinimized, isClosed, typingComplete])
+
+  // Apply syntax highlighting to the displayed code
+  useEffect(() => {
+    if (codeDisplayRef.current && displayedCode) {
       codeDisplayRef.current.innerHTML = Prism.highlight(
-        code,
+        displayedCode,
         Prism.languages[currentLanguage],
         currentLanguage
       )
     }
-  }, [code, currentLanguage])
+  }, [displayedCode, currentLanguage])
 
+  // Monitor fullscreen changes
   useEffect(() => {
     const handleFullscreenChange = () => 
       setIsFullscreen(!!document.fullscreenElement)
@@ -169,6 +277,7 @@ const Home = () => {
     return () => document.removeEventListener("fullscreenchange", handleFullscreenChange)
   }, [])
 
+  // RGB animation effect
   useEffect(() => {
     const interval = setInterval(() => {
       if (rgbActive) setRgbPosition((prev) => (prev + 1) % 360)
@@ -185,6 +294,7 @@ const Home = () => {
     return () => clearInterval(toggleInterval)
   }, [])
 
+  // Initialize tech icons
   useEffect(() => {
     const icons = techStack.map((tech, index) => ({
       id: index,
@@ -200,6 +310,7 @@ const Home = () => {
     setTechIcons(icons)
   }, [])
 
+  // Animate tech icons
   useEffect(() => {
     let animationFrameId
     const animate = () => {
@@ -234,9 +345,9 @@ const Home = () => {
           <h1 className="name">
             Hi, I'm <span className="highlight">Xoli</span> Nxiweni
           </h1>
-          <h2 className="title">A Junior Software Engineer</h2>
+          <h2 className="title">A Junior Software Developer</h2>
           <p className="bio">
-            I'm a full-stack developer focusing on MERN stack. I build innovative solutions with clean, efficient code
+            I'm a Full-Stack developer focusing on MERN stack. I build innovative solutions with clean, efficient code
             and a focus on data integrity, user experience along with user-friendly interfaces.
           </p>
           <div className="social-links">
@@ -257,6 +368,13 @@ const Home = () => {
             <a href="https://wa.me/+27617514638" target="_blank" rel="noopener noreferrer" className="social-link">
               <FaWhatsapp />
             </a>
+            <a 
+                              href="https://www.instagram.com/sbala_eks/" 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="profile-social-link">
+                                <FaInstagram />
+                              </a>
           </div>
           <div className="tech-stack">
             <h3>Tech Stack</h3>
@@ -283,7 +401,7 @@ const Home = () => {
                     <button className="code-dot close" onClick={() => setIsClosed(true)}>
                       <FiX className="window-icon" />
                     </button>
-                    <button className="code-dot minimize" onClick={() => setIsMinimized(!isMinimized)}>
+                    <button className="code-dot minimize" onClick={handleMinimize}>
                       <FiMinimize2 className="window-icon" />
                     </button>
                     <button className="code-dot fullscreen" onClick={toggleFullscreen}>
@@ -303,7 +421,13 @@ const Home = () => {
                 {!isMinimized && (
                   <div className="editor-container">
                     <pre className="code-display">
-                      <code ref={codeDisplayRef} className={`language-${currentLanguage}`} />
+                      <code 
+                        ref={codeDisplayRef} 
+                        className={`language-${currentLanguage}`} 
+                      />
+                      {isTyping && (
+                        <span className="typing-cursor">|</span>
+                      )}
                     </pre>
                   </div>
                 )}
@@ -313,8 +437,8 @@ const Home = () => {
               <button
                 className="restore-btn"
                 onClick={() => {
-                  setIsClosed(false)
-                  setIsMinimized(false)
+                  setIsClosed(false);
+                  setIsMinimized(false);
                 }}
               >
                 Open Code Editor

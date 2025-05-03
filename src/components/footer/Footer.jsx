@@ -6,7 +6,8 @@ import {
   FaPhone,
   FaGithub,
   FaLinkedin,
-  FaTwitter,
+  FaWhatsapp,
+  FaInstagram,
 } from "react-icons/fa"
 import "./Footer.css"
 
@@ -42,13 +43,24 @@ const Footer = () => {
                 <FaLinkedin />
               </a>
               <a
-                href="https://twitter.com/xolinxiweni"
+                href="mailto:xolinxiweni@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-link"
               >
-                <FaTwitter />
+                <FaEnvelope />
               </a>
+              <a href='https://wa.me/+27617514638' target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FaWhatsapp />
+              </a>
+              <a 
+                                href="https://www.instagram.com/sbala_eks/" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="profile-social-link">
+                                  <FaInstagram />
+                                </a>
+              
             </div>
           </div>
 

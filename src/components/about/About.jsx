@@ -11,13 +11,13 @@ const About = () => {
       <div className="about-content">
         <div className="about-text">
           <p>
-            Hi again, I'm Xolile Nxiweni, a Junior Software Engineer with a
+            Hi again, I'm Xolile Nxiweni, a Junior Software Developer with a
             focus on building modern web and mobile applications. My journey in
             software development began very funny, but I discovered my passion
             for creating elegant and profound solutions to complex problems.
           </p>
           <p>
-            In my full-stack development, I'm using the MERN stack (MongoDB,
+            In my Full-Stack development, I'm using the MERN stack (MongoDB,
             Express, React, Node.js), and I'm constantly expanding my knowledge
             in emerging technologies. I believe in writing clean, maintainable
             code and creating intuitive user experiences.
@@ -37,8 +37,7 @@ const About = () => {
       </div>
 
       <div className="skills-container">
-        <h3 className="section-title">My Skills</h3>
-        <p className="section-subtitle">Tech Stack & Tools</p>
+        <h3 className="section-title">My Tech Stack & Tools</h3>
 
         <div className="skills-grid">
           <div className="skill-card">
@@ -150,7 +149,6 @@ const About = () => {
 
       <div className="experience-container">
         <h3 className="section-title">Experience</h3>
-        <p className="section-subtitle">My professional journey so far</p>
 
         <div className="timeline">
           <div className="timeline-item">
@@ -160,8 +158,9 @@ const About = () => {
               <h4 className="timeline-title">CodeTribe Trainee</h4>
               <div className="timeline-company">mLab Southern Africa</div>
               <p className="timeline-description">
-                Working on full-stack web applications using the MERN stack.
-                Developing responsive UIs for mobile and web apps, implementing 
+                Working on Full-Stack web and mobile applications using the MERN stack 
+                (React and React Native). Developing responsive UIs for mobile and web 
+                applications, building server-side rendering apps, implementing 
                 RESTful APIs, and integrating with databases. Collaborating with 
                 a cross-functional team to deliver high-quality software solutions.
               </p>

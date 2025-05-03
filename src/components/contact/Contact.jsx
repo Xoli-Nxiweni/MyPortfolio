@@ -11,6 +11,9 @@ const Contact = () => {
     subject: "",
     message: "",
   })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState({ success: null, message: "" })
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -20,18 +23,49 @@ const Contact = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Here you would typically send the form data to a server
-    console.log("Form submitted:", formData)
-    alert("Thank you for your message! I will get back to you soon.")
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    })
+    setIsSubmitting(true)
+    setSubmitStatus({ success: null, message: "" })
+    
+    try {
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        setSubmitStatus({ 
+          success: true, 
+          message: data.message || "Thank you for your message! I will get back to you soon." 
+        })
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        })
+      } else {
+        setSubmitStatus({ 
+          success: false, 
+          message: data.message || "Something went wrong. Please try again later." 
+        })
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      setSubmitStatus({ 
+        success: false, 
+        message: "Unable to connect to server. Please try again later." 
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -117,6 +151,18 @@ const Contact = () => {
 
         <div className="contact-form-container">
           <form className="contact-form" onSubmit={handleSubmit}>
+            {submitStatus.success === true && (
+              <div className="form-status success">
+                {submitStatus.message}
+              </div>
+            )}
+            
+            {submitStatus.success === false && (
+              <div className="form-status error">
+                {submitStatus.message}
+              </div>
+            )}
+            
             <div className="form-group">
               <label htmlFor="name" className="form-label">
                 Name
@@ -129,6 +175,7 @@ const Contact = () => {
                 onChange={handleChange}
                 className="form-input"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -143,6 +190,7 @@ const Contact = () => {
                 onChange={handleChange}
                 className="form-input"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -157,6 +205,7 @@ const Contact = () => {
                 onChange={handleChange}
                 className="form-input"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -170,10 +219,21 @@ const Contact = () => {
                 onChange={handleChange}
                 className="form-textarea"
                 required
+                disabled={isSubmitting}
               ></textarea>
             </div>
-            <button type="submit" className="form-submit">
-              <FaPaperPlane /> Send Message
+            <button 
+              type="submit" 
+              className="form-submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                "Sending..."
+              ) : (
+                <>
+                  <FaPaperPlane /> Send Message
+                </>
+              )}
             </button>
           </form>
         </div>
