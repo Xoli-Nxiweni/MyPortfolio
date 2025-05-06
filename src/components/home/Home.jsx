@@ -365,6 +365,7 @@ const Home = () => {
             <a
               href="https://github.com/Xoli-Nxiweni"
               target="_blank"
+              title="GitHub"
               rel="noopener noreferrer"
               className="social-link"
             >
@@ -373,17 +374,19 @@ const Home = () => {
             <a
               href="https://www.linkedin.com/in/xolinxiweni/"
               target="_blank"
+              title="LinkedIn"
               rel="noopener noreferrer"
               className="social-link"
             >
               <FaLinkedin />
             </a>
-            <a href="mailto:xolinxiweni@gmail.com" className="social-link">
+            <a href="mailto:xolinxiweni@gmail.com" title="Email" className="social-link">
               <FaEnvelope />
             </a>
             <a
               href="https://wa.me/+27617514638"
               target="_blank"
+              title="WhatsApp"
               rel="noopener noreferrer"
               className="social-link"
             >
@@ -392,6 +395,7 @@ const Home = () => {
             <a
               href="https://www.instagram.com/sbala_eks/"
               target="_blank"
+              title="Instagram"
               rel="noopener noreferrer"
               className="profile-social-link"
             >
@@ -400,6 +404,7 @@ const Home = () => {
             <a
               href={Resume}
               target="_blank"
+              title=" Download Resume"
               rel="noopener noreferrer"
               className="profile-social-link"
             >
