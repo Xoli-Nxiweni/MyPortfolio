@@ -22,7 +22,7 @@ const Footer = () => {
               <span className="footer-logo-text">Xoli Nxiweni</span>
             </div>
             <p className="footer-description">
-              A passionate Junior Software Engineer focused on creating clean, efficient, and user-friendly web
+              A Software Engineer focused on creating clean, efficient, and user-friendly web
               applications.
             </p>
             <div className="footer-social">

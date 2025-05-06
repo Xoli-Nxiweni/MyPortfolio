@@ -38,7 +38,7 @@ import {
               </div>
               <div className="profile-info">
                 <h3 className="profile-name">Xoli Nxiweni</h3>
-                <p className="profile-title">Junior Software Engineer</p>
+                <p className="profile-title">Software Engineer</p>
                 <div className="profile-details">
                   <div className="profile-detail">
                     <FaMapMarkerAlt className="detail-icon" />
@@ -163,7 +163,7 @@ import {
                 <div className="certification-item">
                   <FaCertificate className="certification-icon" />
                   <div className="certification-content">
-                    <div className="certification-name">Full Stack Web and Mobile Development</div>
+                    <div className="certification-name">IITPSA Full Stack Web and Mobile Development</div>
                     <div className="certification-issuer">CodeTribe</div>
                     <div className="certification-date">Issued: April 2025</div>
                   </div>
@@ -179,7 +179,7 @@ import {
                 <div className="certification-item">
                   <FaCertificate className="certification-icon" />
                   <div className="certification-content">
-                    <div className="certification-name">NQF Level 5</div>
+                    <div className="certification-name">NQF Level 5: Systems Development</div>
                     <div className="certification-issuer">Dynamic DNA</div>
                     <div className="certification-date">Issued: November 2024</div>
                   </div>
@@ -187,7 +187,7 @@ import {
                 <div className="certification-item">
                   <FaCertificate className="certification-icon" />
                   <div className="certification-content">
-                    <div className="certification-name">OCAJava SE 8</div>
+                    <div className="certification-name">OCA Java SE 8</div>
                     <div className="certification-issuer">Oracle</div>
                     <div className="certification-date">Issued: October 2023</div>
                   </div>

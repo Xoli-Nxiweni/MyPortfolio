@@ -336,7 +336,7 @@ const Home = () => {
     >
       <header className="header">
         <a href={Resume} download className="resume-btn">
-          <FaDownload /> Download Resume
+          <FaDownload /> <p> Resume</p>
         </a>
       </header>
 
@@ -345,7 +345,7 @@ const Home = () => {
           <h1 className="name">
             Hi, I'm <span className="highlight">Xoli</span> Nxiweni
           </h1>
-          <h2 className="title">A Junior Software Developer</h2>
+          <h2 className="title">A Software Developer</h2>
           <p className="bio">
             I'm a Full-Stack developer focusing on MERN stack. I build innovative solutions with clean, efficient code
             and a focus on data integrity, user experience along with user-friendly interfaces.

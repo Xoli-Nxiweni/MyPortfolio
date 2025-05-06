@@ -11,7 +11,7 @@ const About = () => {
       <div className="about-content">
         <div className="about-text">
           <p>
-            Hi again, I'm Xolile Nxiweni, a Junior Software Developer with a
+            Hi again, I'm Xolile Nxiweni, a Software Developer with a
             focus on building modern web and mobile applications. My journey in
             software development began very funny, but I discovered my passion
             for creating elegant and profound solutions to complex problems.

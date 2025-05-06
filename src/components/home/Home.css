@@ -63,7 +63,7 @@ body {
   gap: 0.5rem;
   background-color: var(--primary-color);
   color: #0d1117;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   text-decoration: none;
   font-weight: 600;
@@ -72,9 +72,11 @@ body {
 
 .resume-btn:hover {
   background-color: #00c456;
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
   box-shadow: 0 4px 12px rgba(0, 237, 100, 0.3);
 }
+
+
 
 .main-content {
   display: flex;
@@ -545,4 +547,103 @@ body {
   background-color: #00c456;
   transform: translate(-50%, -50%) scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 237, 100, 0.3);
+}
+
+@media (max-width: 768px) {
+  .orbital-tech-container {
+    display: none;
+  }
+}
+.orbital-tech-icon {
+  position: absolute;
+  background-color: var(--dark-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease, transform 0.3s ease;
+  will-change: transform, opacity;
+  z-index: 5;
+  transform-origin: center;
+  backdrop-filter: blur(2px);
+}
+
+.orbital-tech-icon img {
+  width: 60%;
+  height: 60%;
+  transition: transform 0.3s ease;
+}
+
+.orbital-tech-icon:hover {
+  transform: scale(1.5) !important;
+  z-index: 100;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(0, 237, 100, 0.3);
+  pointer-events: auto;
+  cursor: pointer;
+  background-color: var(--darker-surface);
+}
+
+.orbital-tech-icon:hover img {
+  transform: rotate(360deg) !important;
+}
+
+/* Add a glow effect for the icons */
+.orbital-tech-icon::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.orbital-tech-icon:hover::after {
+  opacity: 1;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* Add entrance animation for the icons */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.orbital-tech-icon {
+  animation: fadeInScale 0.5s ease forwards;
+  animation-play-state: paused;
+}
+
+.orbital-tech-container.animate .orbital-tech-icon {
+  animation-play-state: running;
 }
