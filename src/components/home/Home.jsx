@@ -8,10 +8,11 @@ import "prismjs/components/prism-typescript"
 import "prismjs/components/prism-java"
 import "prismjs/components/prism-python"
 import "prismjs/components/prism-csharp"
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram, FaThumbsUp } from "react-icons/fa"
 import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi"
 import Resume from "../../assets/Xolile-Nxiweni-Resume-2025.pdf"
 import "./Home.css"
+import LikeButton from "../ui/likeButton/LikeButton"
 
 const Home = () => {
   const [isClosed, setIsClosed] = useState(false)
@@ -328,6 +329,21 @@ const Home = () => {
     return () => cancelAnimationFrame(animationFrameId)
   }, [])
 
+  // const handleLikes = async ()  => {
+  //   const response = await fetch("https://myportfolio-server-c3vo.onrender.com/api/likes", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ like: true }),
+  //   })
+  //   if (response.ok) {
+  //     console.log("Like recorded successfully")
+  //   } else {
+  //     console.error("Error recording like")
+  //   }
+  // }
+
   return (
     <div
       id="homeSection"
@@ -389,6 +405,7 @@ const Home = () => {
             >
               <FaDownload />
             </a>
+            <LikeButton />
 
           </div>
           <div className="tech-stack">
