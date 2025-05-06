@@ -334,12 +334,6 @@ const Home = () => {
       className={`homeScreen ${rgbActive ? "rgb-active" : ""}`}
       style={{ "--rgb-position": `${rgbPosition}deg` }}
     >
-      <header className="header">
-        <a href={Resume} download className="resume-btn">
-          <FaDownload /> <p> Resume</p>
-        </a>
-      </header>
-
       <main className="main-content">
         <div className="left-section">
           <h1 className="name">
@@ -347,11 +341,17 @@ const Home = () => {
           </h1>
           <h2 className="title">A Software Developer</h2>
           <p className="bio">
-            I'm a Full-Stack developer focusing on MERN stack. I build innovative solutions with clean, efficient code
-            and a focus on data integrity, user experience along with user-friendly interfaces.
+            I'm a Full-Stack developer focusing on MERN stack. I build
+            innovative solutions with clean, efficient code and a focus on data
+            integrity, user experience along with user-friendly interfaces.
           </p>
           <div className="social-links">
-            <a href="https://github.com/Xoli-Nxiweni" target="_blank" rel="noopener noreferrer" className="social-link">
+            <a
+              href="https://github.com/Xoli-Nxiweni"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
               <FaGithub />
             </a>
             <a
@@ -365,16 +365,31 @@ const Home = () => {
             <a href="mailto:xolinxiweni@gmail.com" className="social-link">
               <FaEnvelope />
             </a>
-            <a href="https://wa.me/+27617514638" target="_blank" rel="noopener noreferrer" className="social-link">
+            <a
+              href="https://wa.me/+27617514638"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
               <FaWhatsapp />
             </a>
-            <a 
-                              href="https://www.instagram.com/sbala_eks/" 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="profile-social-link">
-                                <FaInstagram />
-                              </a>
+            <a
+              href="https://www.instagram.com/sbala_eks/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="profile-social-link"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href={Resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="profile-social-link"
+            >
+              <FaDownload />
+            </a>
+
           </div>
           <div className="tech-stack">
             <h3>Tech Stack</h3>
@@ -395,21 +410,36 @@ const Home = () => {
         <div className="right-section">
           <div className="hero-image">
             {!isClosed && (
-              <div className={`code-window ${isFullscreen ? "fullscreen" : ""}`} ref={codeWindowRef}>
+              <div
+                className={`code-window ${isFullscreen ? "fullscreen" : ""}`}
+                ref={codeWindowRef}
+              >
                 <div className="code-header">
                   <div className="code-dots">
-                    <button className="code-dot close" onClick={() => setIsClosed(true)}>
+                    <button
+                      className="code-dot close"
+                      onClick={() => setIsClosed(true)}
+                    >
                       <FiX className="window-icon" />
                     </button>
-                    <button className="code-dot minimize" onClick={handleMinimize}>
+                    <button
+                      className="code-dot minimize"
+                      onClick={handleMinimize}
+                    >
                       <FiMinimize2 className="window-icon" />
                     </button>
-                    <button className="code-dot fullscreen" onClick={toggleFullscreen}>
+                    <button
+                      className="code-dot fullscreen"
+                      onClick={toggleFullscreen}
+                    >
                       <FiMaximize2 className="window-icon" />
                     </button>
                   </div>
                   <div className="code-title">
-                    <select value={currentLanguage} onChange={handleLanguageChange}>
+                    <select
+                      value={currentLanguage}
+                      onChange={handleLanguageChange}
+                    >
                       <option value="javascript">JavaScript</option>
                       <option value="typescript">TypeScript</option>
                       <option value="java">Java</option>
@@ -421,13 +451,11 @@ const Home = () => {
                 {!isMinimized && (
                   <div className="editor-container">
                     <pre className="code-display">
-                      <code 
-                        ref={codeDisplayRef} 
-                        className={`language-${currentLanguage}`} 
+                      <code
+                        ref={codeDisplayRef}
+                        className={`language-${currentLanguage}`}
                       />
-                      {isTyping && (
-                        <span className="typing-cursor">|</span>
-                      )}
+                      {isTyping && <span className="typing-cursor">|</span>}
                     </pre>
                   </div>
                 )}
@@ -447,10 +475,10 @@ const Home = () => {
 
             <div className="orbital-tech-container">
               {techIcons.map((icon) => {
-                const x = Math.cos(icon.angle) * icon.radius
-                const y = Math.sin(icon.angle) * icon.radius
-                const pulseScale = 1 + Math.sin(icon.pulse) * 0.1
-                
+                const x = Math.cos(icon.angle) * icon.radius;
+                const y = Math.sin(icon.angle) * icon.radius;
+                const pulseScale = 1 + Math.sin(icon.pulse) * 0.1;
+
                 return (
                   <div
                     key={icon.id}
@@ -462,27 +490,29 @@ const Home = () => {
                           calc(50% + ${y}px + ${icon.yOffset}px)
                         )
                         scale(${pulseScale})
-                        rotate(${icon.angle * 180/Math.PI}deg)
+                        rotate(${(icon.angle * 180) / Math.PI}deg)
                       `,
                       width: `${icon.size}px`,
                       height: `${icon.size}px`,
-                      filter: `brightness(${1.2 + Math.abs(icon.yOffset / 30)})`,
-                      zIndex: Math.round(icon.size)
+                      filter: `brightness(${
+                        1.2 + Math.abs(icon.yOffset / 30)
+                      })`,
+                      zIndex: Math.round(icon.size),
                     }}
                   >
-                    <img 
-                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon.icon}.svg`} 
+                    <img
+                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon.icon}.svg`}
                       alt={icon.name}
                     />
                   </div>
-                )
+                );
               })}
             </div>
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 export default Home

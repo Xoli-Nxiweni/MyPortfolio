@@ -213,43 +213,9 @@ import {
               </div>
             </div>
   
-            <div className="profile-section">
-              <h3 className="profile-section-title">Interests</h3>
-              <div className="interests-list">
-                <div className="interest-item">
-                  <FaCode className="interest-icon" />
-                  <span className="interest-name">Coding</span>
-                </div>
-                <div className="interest-item">
-                  <FaBook className="interest-icon" />
-                  <span className="interest-name">Reading</span>
-                </div>
-                <div className="interest-item">
-                  <FaMusic className="interest-icon" />
-                  <span className="interest-name">Music</span>
-                </div>
-                {/* <div className="interest-item">
-                  <FaGamepad className="interest-icon" />
-                  <span className="interest-name">Gaming</span>
-                </div>
-                <div className="interest-item">
-                  <FaHiking className="interest-icon" />
-                  <span className="interest-name">Hiking</span>
-                </div> */}
-                <div className="interest-item">
-                  <FaCamera className="interest-icon" />
-                  <span className="interest-name">Photography</span>
-                </div>
-                <div className="interest-item">
-                  <FaPlane className="interest-icon" />
-                  <span className="interest-name">Travel</span>
-                </div>
-                <div className="interest-item">
-                  <FaGraduationCap className="interest-icon" />
-                  <span className="interest-name">Learning</span>
-                </div>
-              </div>
-            </div>
+         <br />
+         <br />
+         <br />
           </div>
         </div>
       </div>
