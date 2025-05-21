@@ -410,7 +410,6 @@ const Home = () => {
             >
               <FaDownload />
             </a>
-            <LikeButton />
 
           </div>
           <div className="tech-stack">
