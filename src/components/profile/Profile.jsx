@@ -50,12 +50,8 @@ import {
                   </div>
                   <div className="profile-detail">
                     <FaPhone className="detail-icon" />
-                    <span>+27 60 545 0493</span>
+                    <span>+27 61 751 4638</span>
                   </div>
-                  {/* <div className="profile-detail">
-                    <FaGlobe className="detail-icon" />
-                    <span>www.xolinxiweni.com</span>
-                  </div> */}
                 </div>
                 <div className="profile-social">
                   <a

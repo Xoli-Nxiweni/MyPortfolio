@@ -136,7 +136,7 @@ const About = () => {
             </div>
             <ul className="skill-list">
               <li className="skill-item">Agile Methodology</li>
-              <li className="skill-item">CI/CD</li>
+              {/* <li className="skill-item">CI/CD</li> */}
               <li className="skill-item">
                 Testing (Jest, React Testing Library)
               </li>
@@ -151,6 +151,20 @@ const About = () => {
         <h3 className="section-title">Experience</h3>
 
         <div className="timeline">
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-content">
+              <div className="timeline-date">August 2025 - Present</div>
+              <h4 className="timeline-title">Intern Software Engineer</h4>
+              <div className="timeline-company">Yooko Technologies (Pty) Ltd</div>
+              <p className="timeline-description">
+                Design, develop, and maintain full-stack software solutions.
+                Deliver new software development projects with 90% on-time completion rate
+                Maintain and enhance existing production systems with 99.5% uptime target
+                Ensure security compliance and data protection protocols adherence.
+              </p>
+            </div>
+          </div>
           <div className="timeline-item">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -197,6 +211,7 @@ const About = () => {
               </p>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

@@ -8,7 +8,6 @@ import Home from "./components/home/Home"
 import Profile from "./components/profile/Profile"
 import Footer from "./components/footer/Footer"
 import Projects from "./components/projects/Projects"
-// import ThemeToggle from "./ThemeToggle"
 import "./globalStyles.css"
 
 const App = () => {

@@ -95,7 +95,7 @@ const Footer = () => {
               </div>
               <div className="footer-contact-item">
                 <FaPhone className="footer-contact-icon" />
-                <span>+27 60 545 0493</span>
+                <span>+27 61 751 4638</span>
               </div>
             </div>
           </div>
