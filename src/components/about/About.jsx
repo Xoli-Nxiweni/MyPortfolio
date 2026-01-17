@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { FaCode, FaServer, FaMobile, FaDatabase, FaTools, FaLaptopCode } from "react-icons/fa"
 import "./About.css"
 
@@ -40,7 +41,14 @@ const About = () => {
         <h3 className="section-title">My Tech Stack & Tools</h3>
 
         <div className="skills-grid">
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaCode />
@@ -55,9 +63,16 @@ const About = () => {
               <li className="skill-item">Redux State Management</li>
               <li className="skill-item">Tailwind CSS</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaServer />
@@ -73,9 +88,16 @@ const About = () => {
               <li className="skill-item">Authentication & Authorization</li>
               <li className="skill-item">Server-side Rendering</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaDatabase />
@@ -89,9 +111,16 @@ const About = () => {
               <li className="skill-item">Data Modeling</li>
               <li className="skill-item">Database Optimization</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaMobile />
@@ -105,9 +134,16 @@ const About = () => {
               <li className="skill-item">Mobile-First Approach</li>
               <li className="skill-item">Cross-platform Development</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaTools />
@@ -125,9 +161,16 @@ const About = () => {
               <li className="skill-item">Microsoft Teams</li>
               <li className="skill-item">Google Workspace</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="skill-card">
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
             <div className="skill-header">
               <div className="skill-icon">
                 <FaLaptopCode />
@@ -143,7 +186,7 @@ const About = () => {
               <li className="skill-item">Problem Solving</li>
               <li className="skill-item">Technical Documentation</li>
             </ul>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -154,14 +197,12 @@ const About = () => {
           <div className="timeline-item">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
-              <div className="timeline-date">August 2025 - Present</div>
+              <div className="timeline-date">August 2025 - December 2025</div>
               <h4 className="timeline-title">Intern Software Engineer</h4>
               <div className="timeline-company">Yooko Technologies (Pty) Ltd</div>
               <p className="timeline-description">
-                Design, develop, and maintain full-stack software solutions.
-                Deliver new software development projects with 90% on-time completion rate
-                Maintain and enhance existing production systems with 99.5% uptime target
-                Ensure security compliance and data protection protocols adherence.
+                Design, develop, and maintain full-stack internal software solutions.
+                Including building web application for employees to use.
               </p>
             </div>
           </div>

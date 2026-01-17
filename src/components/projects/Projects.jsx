@@ -1,13 +1,22 @@
 "use client"
 
 import { useState, useEffect, useCallback, memo } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { FaGithub, FaExternalLinkAlt, FaTimes, FaSearch } from "react-icons/fa"
 import "./Projects.css"
 import { projectsData } from "./projectsData"
 
 // Memoized project card component for performance
-const ProjectCard = memo(({ project, openModal }) => (
-  <div className="project-card" data-aos="fade-up">
+const ProjectCard = memo(({ project, openModal, index }) => (
+  <motion.div 
+    className="project-card"
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    whileHover={{ y: -8, transition: { duration: 0.2 } }}
+    layout
+  >
     <div className="project-image" onClick={() => openModal(project)}>
       <img 
         src={project.image || "/placeholder.svg"} 
@@ -50,31 +59,59 @@ const ProjectCard = memo(({ project, openModal }) => (
         )}
       </div>
     </div>
-  </div>
+  </motion.div>
 ));
 
 // Memoized project modal component
 const ProjectModal = memo(({ selectedProject, closeModal, handleModalClick }) => (
-  <div className="project-modal-overlay" onClick={handleModalClick}>
-    <div className="project-modal">
-      <button className="modal-close-btn" onClick={closeModal} aria-label="Close modal">
+  <motion.div 
+    className="project-modal-overlay" 
+    onClick={handleModalClick}
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.2 }}
+  >
+    <motion.div 
+      className="project-modal"
+      initial={{ scale: 0.9, y: 20 }}
+      animate={{ scale: 1, y: 0 }}
+      exit={{ scale: 0.9, y: 20 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <button 
+        className="modal-close-btn" 
+        onClick={closeModal} 
+        aria-label="Close project details modal"
+        type="button"
+      >
         <FaTimes />
       </button>
       <div className="modal-content">
         <div className="modal-image">
           <img 
             src={selectedProject.image || "/placeholder.svg"} 
-            alt={selectedProject.title} 
+            alt={`${selectedProject.title} preview`}
           />
         </div>
-        <h2 className="modal-title">{selectedProject.title}</h2>
+        <h2 id="modal-title" className="modal-title">{selectedProject.title}</h2>
         <p className="modal-description">{selectedProject.description}</p>
         <div className="modal-tech-title">Technologies Used:</div>
-        <div className="modal-tech">
+        <div className="modal-tech" role="list" aria-label="Technologies used in this project">
           {selectedProject.technologies.map((tech, index) => (
-            <span className="tech-tag" key={index}>
+            <motion.span 
+              className="tech-tag" 
+              key={index} 
+              role="listitem"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.05 }}
+            >
               {tech}
-            </span>
+            </motion.span>
           ))}
         </div>
         <div className="modal-links">
@@ -84,8 +121,9 @@ const ProjectModal = memo(({ selectedProject, closeModal, handleModalClick }) =>
               target="_blank"
               rel="noopener noreferrer"
               className="modal-link demo"
+              aria-label={`View demo of ${selectedProject.title}`}
             >
-              <FaExternalLinkAlt /> View Demo
+              <FaExternalLinkAlt aria-hidden="true" /> View Demo
             </a>
           )}
           {selectedProject.codeLink && (
@@ -94,14 +132,15 @@ const ProjectModal = memo(({ selectedProject, closeModal, handleModalClick }) =>
               target="_blank"
               rel="noopener noreferrer"
               className="modal-link code"
+              aria-label={`View source code of ${selectedProject.title} on GitHub`}
             >
-              <FaGithub /> View Code
+              <FaGithub aria-hidden="true" /> View Code
             </a>
           )}
         </div>
       </div>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 ));
 
 const Projects = () => {
@@ -169,55 +208,67 @@ const Projects = () => {
       </div>
 
       <div className="projects-filter">
-        <div className="filter-categories">
+        <div className="filter-categories" role="group" aria-label="Filter projects by category">
           {categories.map((category) => (
             <button
               key={category}
               className={`filter-btn ${activeTag === category ? 'active' : ''}`}
               onClick={() => setActiveTag(category)}
+              aria-label={`Filter by ${category}`}
+              aria-pressed={activeTag === category}
+              type="button"
             >
               {category}
             </button>
           ))}
         </div>
         <div className="search-container">
-          <FaSearch className="search-icon" />
+          <FaSearch className="search-icon" aria-hidden="true" />
           <input
-            type="text"
+            type="search"
             placeholder="Search projects..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className="search-input"
+            aria-label="Search projects by name, description, or technology"
           />
         </div>
       </div>
 
       {filteredProjects.length > 0 ? (
         <div className="projects-grid">
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard 
               key={project.id} 
               project={project} 
-              openModal={openModal} 
+              openModal={openModal}
+              index={index}
             />
           ))}
         </div>
       ) : (
-        <div className="no-projects">
+        <motion.div 
+          className="no-projects"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <p>No projects match this search category, please select preferred category above or the button below.</p>
           <button className="reset-btn" onClick={() => {setFilter(""); setActiveTag("All");}}>
             Show All Projects
           </button>
-        </div>
+        </motion.div>
       )}
 
-      {isModalOpen && selectedProject && (
-        <ProjectModal
-          selectedProject={selectedProject}
-          closeModal={closeModal}
-          handleModalClick={handleModalClick}
-        />
-      )}
+      <AnimatePresence>
+        {isModalOpen && selectedProject && (
+          <ProjectModal
+            selectedProject={selectedProject}
+            closeModal={closeModal}
+            handleModalClick={handleModalClick}
+          />
+        )}
+      </AnimatePresence>
 
       <div className="projects-cta">
         <p className="cta-text">Interested in seeing more of my work?</p>

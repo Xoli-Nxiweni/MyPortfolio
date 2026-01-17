@@ -163,6 +163,18 @@ body {
   color: var(--primary-color);
 }
 
+.resume-btn {
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.resume-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--darker-surface);
+  border-color: var(--primary-color);
+}
+
 .tech-stack {
   margin-top: 2rem;
 }

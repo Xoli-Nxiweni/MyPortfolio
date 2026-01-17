@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane } from "react-icons/fa"
+import { motion } from "framer-motion"
+import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaGithub, FaLinkedin, FaTwitter, FaPaperPlane, FaExternalLinkAlt } from "react-icons/fa"
 import "./Contact.css"
 
 const Contact = () => {
@@ -14,6 +15,32 @@ const Contact = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: "" })
+  const [validationErrors, setValidationErrors] = useState({})
+  const [retryCount, setRetryCount] = useState(0)
+
+  const validateForm = () => {
+    const errors = {}
+    
+    if (!formData.name.trim() || formData.name.length < 2) {
+      errors.name = "Name must be at least 2 characters long"
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      errors.email = "Please enter a valid email address"
+    }
+    
+    if (!formData.subject.trim() || formData.subject.length < 3) {
+      errors.subject = "Subject must be at least 3 characters long"
+    }
+    
+    if (!formData.message.trim() || formData.message.length < 10) {
+      errors.message = "Message must be at least 10 characters long"
+    }
+    
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -21,57 +48,103 @@ const Contact = () => {
       ...prevState,
       [name]: value,
     }))
+    
+    // Clear validation error for this field when user types
+    if (validationErrors[name]) {
+      setValidationErrors((prev) => ({
+        ...prev,
+        [name]: undefined
+      }))
+    }
+  }
+  
+  const openMailtoFallback = () => {
+    const subject = encodeURIComponent(formData.subject)
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    )
+    window.location.href = `mailto:xolinxiweni@gmail.com?subject=${subject}&body=${body}`
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Validate form
+    if (!validateForm()) {
+      setSubmitStatus({ 
+        success: false, 
+        message: "Please fix the errors in the form before submitting." 
+      })
+      return
+    }
+    
     setIsSubmitting(true)
     setSubmitStatus({ success: null, message: "" })
     
-    try {
-      const response = await fetch('https://myportfolio-server-c3vo.onrender.com/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-      
-      const data = await response.json()
-      
-      if (response.ok) {
-        setSubmitStatus({ 
-          success: true, 
-          message: data.message || "Thank you for your message! I will get back to you soon." 
+    const maxRetries = 2
+    let attempt = 0
+    
+    while (attempt <= maxRetries) {
+      try {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+        
+        const response = await fetch('https://myportfolio-server-c3vo.onrender.com/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+          signal: controller.signal
         })
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        })
-      } else {
-        setSubmitStatus({ 
-          success: false, 
-          message: data.message || "Something went wrong. Please try again later." 
-        })
+        
+        clearTimeout(timeoutId)
+        
+        if (response.ok) {
+          const data = await response.json()
+          setSubmitStatus({ 
+            success: true, 
+            message: data.message || "Thank you for your message! I will get back to you soon." 
+          })
+          // Reset form
+          setFormData({
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          })
+          setRetryCount(0)
+          setIsSubmitting(false)
+          return
+        } else {
+          const data = await response.json().catch(() => ({}))
+          throw new Error(data.message || `Server error: ${response.status}`)
+        }
+      } catch (error) {
+        console.error(`Attempt ${attempt + 1} failed:`, error)
+        attempt++
+        
+        if (attempt > maxRetries) {
+          setSubmitStatus({ 
+            success: false, 
+            message: "Unable to send message. The server might be temporarily unavailable." 
+          })
+          setRetryCount(attempt)
+          break
+        }
+        
+        // Wait before retrying (exponential backoff)
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt))
       }
-    } catch (error) {
-      console.error("Error submitting form:", error)
-      setSubmitStatus({ 
-        success: false, 
-        message: "Unable to connect to server. Please try again later." 
-      })
-    } finally {
-      setIsSubmitting(false)
     }
+    
+    setIsSubmitting(false)
   }
 
   return (
-    <div className="contact-container" id="contactSection">
+    <section className="contact-container" id="contactSection" aria-labelledby="contact-heading">
       <div className="contact-header">
-        <h2 className="section-title">Contact Me</h2>
+        <h2 id="contact-heading" className="section-title">Contact Me</h2>
       </div>
 
       <div className="contact-content">
@@ -150,22 +223,22 @@ const Contact = () => {
         </div>
 
         <div className="contact-form-container">
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form className="contact-form" onSubmit={handleSubmit} aria-label="Contact form">
             {submitStatus.success === true && (
-              <div className="form-status success">
+              <div className="form-status success" role="alert" aria-live="polite">
                 {submitStatus.message}
               </div>
             )}
             
             {submitStatus.success === false && (
-              <div className="form-status error">
+              <div className="form-status error" role="alert" aria-live="assertive">
                 {submitStatus.message}
               </div>
             )}
             
             <div className="form-group">
               <label htmlFor="name" className="form-label">
-                Name
+                Name <span aria-label="required">*</span>
               </label>
               <input
                 type="text"
@@ -173,14 +246,24 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="form-input"
+                className={`form-input ${validationErrors.name ? 'error' : ''}`}
                 required
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={!!validationErrors.name}
+                aria-describedby={validationErrors.name ? "name-error" : undefined}
+                minLength="2"
+                maxLength="100"
               />
+              {validationErrors.name && (
+                <span id="name-error" className="field-error" role="alert">
+                  {validationErrors.name}
+                </span>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="email" className="form-label">
-                Email
+                Email <span aria-label="required">*</span>
               </label>
               <input
                 type="email"
@@ -188,14 +271,22 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="form-input"
+                className={`form-input ${validationErrors.email ? 'error' : ''}`}
                 required
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={!!validationErrors.email}
+                aria-describedby={validationErrors.email ? "email-error" : undefined}
               />
+              {validationErrors.email && (
+                <span id="email-error" className="field-error" role="alert">
+                  {validationErrors.email}
+                </span>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="subject" className="form-label">
-                Subject
+                Subject <span aria-label="required">*</span>
               </label>
               <input
                 type="text"
@@ -203,43 +294,93 @@ const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="form-input"
+                className={`form-input ${validationErrors.subject ? 'error' : ''}`}
                 required
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={!!validationErrors.subject}
+                aria-describedby={validationErrors.subject ? "subject-error" : undefined}
+                minLength="3"
+                maxLength="200"
               />
+              {validationErrors.subject && (
+                <span id="subject-error" className="field-error" role="alert">
+                  {validationErrors.subject}
+                </span>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="message" className="form-label">
-                Message
+                Message <span aria-label="required">*</span>
               </label>
               <textarea
                 id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="form-textarea"
+                className={`form-textarea ${validationErrors.message ? 'error' : ''}`}
                 required
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={!!validationErrors.message}
+                aria-describedby={validationErrors.message ? "message-error" : undefined}
+                minLength="10"
+                maxLength="1000"
+                rows="6"
               ></textarea>
+              {validationErrors.message && (
+                <span id="message-error" className="field-error" role="alert">
+                  {validationErrors.message}
+                </span>
+              )}
             </div>
             <button 
               type="submit" 
               className="form-submit"
               disabled={isSubmitting}
+              aria-label={isSubmitting ? "Sending message" : "Send message"}
             >
               {isSubmitting ? (
-                "Sending..."
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    style={{ display: "inline-block" }}
+                  >
+                    <FaPaperPlane aria-hidden="true" />
+                  </motion.div>
+                  {" "}Sending...
+                </>
               ) : (
                 <>
-                  <FaPaperPlane /> Send Message
+                  <FaPaperPlane aria-hidden="true" /> Send Message
                 </>
               )}
             </button>
+            
+            {submitStatus.success === false && retryCount >= 2 && (
+              <motion.div 
+                className="mailto-fallback"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <p className="fallback-text">Having trouble? Try sending an email directly:</p>
+                <button
+                  type="button"
+                  onClick={openMailtoFallback}
+                  className="fallback-button"
+                  aria-label="Open email client to send message"
+                >
+                  <FaExternalLinkAlt aria-hidden="true" /> Open Email Client
+                </button>
+              </motion.div>
+            )}
           </form>
         </div>
       </div>
 
-    </div>
+    </section>
   )
 }
 

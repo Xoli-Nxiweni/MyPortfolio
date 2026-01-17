@@ -63,23 +63,37 @@ const Navbar = ({ activeSection, setActiveSection }) => {
   ];
 
   return (
-    <nav className="navbar" style={{ 
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible 
-        ? "translate(-50%, 0)" 
-        : "translate(-50%, 20px)",
-    }}>
+    <nav 
+      className="navbar" 
+      style={{ 
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible 
+          ? "translate(-50%, 0)" 
+          : "translate(-50%, 20px)",
+      }}
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="navbar-container">
         {sections.map(({ label, id, icon }) => (
-          <div
+          <button
             key={id}
             className={`navbar-item ${activeSection === id ? "active" : ""}`}
             onClick={() => scrollToSection(id)}
-            title={label}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollToSection(id);
+              }
+            }}
+            title={`Navigate to ${label} section`}
+            aria-label={`Navigate to ${label} section`}
+            aria-current={activeSection === id ? "page" : undefined}
+            type="button"
           >
-            <div className="navbar-icon">{icon}</div>
+            <div className="navbar-icon" aria-hidden="true">{icon}</div>
             <span className="navbar-label">{label}</span>
-          </div>
+          </button>
         ))}
       </div>
     </nav>

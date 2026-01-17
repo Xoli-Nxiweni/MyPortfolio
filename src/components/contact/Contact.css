@@ -232,3 +232,72 @@ button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* Field validation errors */
+.field-error {
+  display: block;
+  color: #ff4c4c;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  animation: shake 0.3s ease-in-out;
+}
+
+.form-input.error,
+.form-textarea.error {
+  border-color: #ff4c4c;
+  background-color: rgba(255, 76, 76, 0.05);
+}
+
+.form-input.error:focus,
+.form-textarea.error:focus {
+  border-color: #ff4c4c;
+  box-shadow: 0 0 0 3px rgba(255, 76, 76, 0.1);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Mailto fallback */
+.mailto-fallback {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: var(--darker-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.fallback-text {
+  color: var(--muted-text);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.fallback-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.fallback-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.form-submit:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}

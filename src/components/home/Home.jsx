@@ -8,9 +8,10 @@ import "prismjs/components/prism-typescript"
 import "prismjs/components/prism-java"
 import "prismjs/components/prism-python"
 import "prismjs/components/prism-csharp"
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram, FaEye } from "react-icons/fa"
 import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi"
 import Resume from "../../assets/Xolile-Nxiweni-Resume-2025.pdf"
+import ResumeViewer from "../resume/ResumeViewer"
 import "./Home.css"
 
 const Home = () => {
@@ -30,6 +31,9 @@ const Home = () => {
   const [typingComplete, setTypingComplete] = useState(false)
   const typingTimerRef = useRef(null)
   const currentPosRef = useRef(0) // To track typing position between renders
+  
+  // State for resume viewer
+  const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false)
 
   const codeSamples = {
     javascript: `class Developer {
@@ -385,12 +389,20 @@ const Home = () => {
             >
               <FaInstagram />
             </a>
+            <button
+              onClick={() => setIsResumeViewerOpen(true)}
+              title="View Resume"
+              className="social-link resume-btn"
+              aria-label="View resume"
+            >
+              <FaEye />
+            </button>
             <a
               href={Resume}
-              target="_blank"
-              title=" Download Resume"
-              rel="noopener noreferrer"
-              className="profile-social-link"
+              download="Xolile-Nxiweni-Resume-2025.pdf"
+              title="Download Resume"
+              className="social-link"
+              aria-label="Download resume"
             >
               <FaDownload />
             </a>
@@ -516,6 +528,13 @@ const Home = () => {
           </div>
         </div>
       </main>
+
+      {/* Resume Viewer Modal */}
+      <ResumeViewer
+        isOpen={isResumeViewerOpen}
+        onClose={() => setIsResumeViewerOpen(false)}
+        resumeUrl={Resume}
+      />
     </div>
   );
 }
