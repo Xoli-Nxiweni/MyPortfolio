@@ -4,41 +4,45 @@ import "./About.css"
 
 const About = () => {
   return (
-    <div className="about-container" id="aboutSection">
-      <div className="about-header">
-        <h2 className="section-title">About Me</h2>
-      </div>
+    <section className="about-container" id="aboutSection" aria-labelledby="about-heading">
+      <header className="about-header">
+        <h2 id="about-heading" className="section-title">About Me</h2>
+      </header>
 
       <div className="about-content">
         <div className="about-text">
           <p>
-            Hi again, I'm Xolile Nxiweni, a Software Developer with a
-            focus on building modern web and mobile applications. My journey in
-            software development began very funny, but I discovered my passion
-            for creating elegant and profound solutions to complex problems.
+            I'm Xolile Nxiweni, a dedicated Software Developer specializing in
+            building modern web and mobile applications. My journey in software
+            development has been driven by a passion for creating elegant and
+            effective solutions to complex problems.
           </p>
           <p>
-            In my Full-Stack development, I'm using the MERN stack (MongoDB,
-            Express, React, Node.js), and I'm constantly expanding my knowledge
-            in emerging technologies. I believe in writing clean, maintainable
-            code and creating intuitive user experiences.
+            I specialize in full-stack development using the MERN stack (MongoDB,
+            Express, React, Node.js), and continuously expand my expertise in
+            emerging technologies. I am committed to writing clean, maintainable
+            code and delivering intuitive user experiences that drive business value.
           </p>
           <p>
-            When I'm not coding, you can find me exploring new technologies,
-            expanding my knowledge through technical documentation. I'm always
-            eager to learn and grow as a developer.
+            Beyond coding, I actively explore new technologies and deepen my
+            knowledge through technical documentation and hands-on practice. I am
+            passionate about continuous learning and professional growth in the
+            ever-evolving field of software development.
           </p>
         </div>
         <div className="about-image">
           <img
             src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Developer working on code"
+            alt="Xoli Nxiweni - Full Stack Software Developer working on modern web and mobile applications using MERN stack technologies"
+            loading="lazy"
+            width="600"
+            height="400"
           />
         </div>
       </div>
 
-      <div className="skills-container">
-        <h3 className="section-title">My Tech Stack & Tools</h3>
+      <section className="skills-container" aria-labelledby="skills-heading">
+        <h3 id="skills-heading" className="section-title">My Tech Stack & Tools</h3>
 
         <div className="skills-grid">
           <motion.div 
@@ -188,21 +192,22 @@ const About = () => {
             </ul>
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      <div className="experience-container">
-        <h3 className="section-title">Experience</h3>
+      <section className="experience-container" aria-labelledby="experience-heading">
+        <h3 id="experience-heading" className="section-title">Experience</h3>
 
         <div className="timeline">
           <div className="timeline-item">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
-              <div className="timeline-date">August 2025 - December 2025</div>
+              <div className="timeline-date">August 2024 - December 2024</div>
               <h4 className="timeline-title">Intern Software Engineer</h4>
               <div className="timeline-company">Yooko Technologies (Pty) Ltd</div>
               <p className="timeline-description">
-                Design, develop, and maintain full-stack internal software solutions.
-                Including building web application for employees to use.
+                Designed, developed, and maintained full-stack internal software solutions,
+                including web applications for employee use. Collaborated with the development
+                team to deliver scalable and efficient software solutions.
               </p>
             </div>
           </div>
@@ -213,11 +218,11 @@ const About = () => {
               <h4 className="timeline-title">CodeTribe Trainee</h4>
               <div className="timeline-company">mLab Southern Africa</div>
               <p className="timeline-description">
-                Working on Full-Stack web and mobile applications using the MERN stack 
-                (React and React Native). Developing responsive UIs for mobile and web 
-                applications, building server-side rendering apps, implementing 
-                RESTful APIs, and integrating with databases. Collaborating with 
-                a cross-functional team to deliver high-quality software solutions.
+                Developed full-stack web and mobile applications using the MERN stack
+                (React and React Native). Built responsive UIs for mobile and web
+                applications, implemented server-side rendering, created RESTful APIs,
+                and integrated with databases. Collaborated with cross-functional teams
+                to deliver high-quality software solutions.
               </p>
             </div>
           </div>
@@ -229,11 +234,11 @@ const About = () => {
               <h4 className="timeline-title">Software Development Trainee NQF Level 5</h4>
               <div className="timeline-company">Dynamic DNA</div>
               <p className="timeline-description">
-                Focused on international certificates, including AZ-900, DP-900,
-                OCA JAVA SE 8. I also worked on mentoring a group of trainees within
-                the company for a month for a Web Development project using HTML, CSS,
-                and JavaScript to build personal responsive and visually appealing 
-                portfolios.
+                Earned international certifications including Microsoft AZ-900, DP-900,
+                and Oracle OCA Java SE 8. Mentored a team of trainees on a web development
+                project, guiding them in building responsive portfolios using HTML, CSS,
+                and JavaScript. Developed technical training materials and provided
+                hands-on guidance.
               </p>
             </div>
           </div>
@@ -245,17 +250,17 @@ const About = () => {
               <h4 className="timeline-title">Software Development Trainee NQF Level 4</h4>
               <div className="timeline-company">Dynamic DNA</div>
               <p className="timeline-description">
-                Developed websites for educational purposes, wrote technical
-                tests, examinations and projects for web development using HTML,
-                CSS, Javascript, Java, C# and a bit of other skills like Solving
-                math problems using MS Excel and a bit of Networks. 
+                Developed educational websites and created technical assessments,
+                examinations, and projects for web development using HTML, CSS, JavaScript,
+                Java, and C#. Gained foundational knowledge in data analysis using MS Excel
+                and network fundamentals.
               </p>
             </div>
           </div>
           
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

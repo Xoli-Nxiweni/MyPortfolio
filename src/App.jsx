@@ -14,28 +14,30 @@ const App = () => {
   const [activeSection, setActiveSection] = useState("homeSection")
 
   return (
-    <div>
+    <>
       {/* <ThemeToggle /> */}
       <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
-      <section id="homeSection">
-        <Home />
-      </section>
-      <section id="aboutSection">
-        <About />
-      </section>
-      <section id="profileSection">
-        <Profile />
-      </section>
-      <section id="projectsSection">
-        <Projects />
-      </section>
-      <section id="contactSection">
-        <Contact />
-      </section>
-      <section id="footerSection">
+      <main>
+        <section id="homeSection" aria-label="Home">
+          <Home />
+        </section>
+        <section id="aboutSection" aria-label="About">
+          <About />
+        </section>
+        <section id="profileSection" aria-label="Profile">
+          <Profile />
+        </section>
+        <section id="projectsSection" aria-label="Projects">
+          <Projects />
+        </section>
+        <section id="contactSection" aria-label="Contact">
+          <Contact />
+        </section>
+      </main>
+      <footer id="footerSection" aria-label="Footer">
         <Footer />
-      </section>
-    </div>
+      </footer>
+    </>
   )
 }
 

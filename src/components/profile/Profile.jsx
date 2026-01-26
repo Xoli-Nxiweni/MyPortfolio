@@ -22,10 +22,10 @@ import {
   
   const Profile = () => {
     return (
-      <div className="profile-container" id="profileSection">
-        <div className="profile-header">
-          <h2 className="section-title">My Profile</h2>
-        </div>
+      <section className="profile-container" id="profileSection" aria-labelledby="profile-heading">
+        <header className="profile-header">
+          <h2 id="profile-heading" className="section-title">My Profile</h2>
+        </header>
   
         <div className="profile-content">
           <div className="profile-sidebar">
@@ -33,7 +33,10 @@ import {
               <div className="profile-image">
                 <img
                   src={image}
-                  alt="Xoli Nxiweni"
+                  alt="Xoli Nxiweni - Full Stack Software Developer and Software Engineer based in Johannesburg, South Africa"
+                  loading="lazy"
+                  width="300"
+                  height="300"
                 />
               </div>
               <div className="profile-info">
@@ -123,24 +126,17 @@ import {
           </div>
   
           <div className="profile-main">
-            <div className="profile-section">
-              <h3 className="profile-section-title">Education</h3>
-              {/* <div className="education-item">
-                <div className="education-date">2019 - 2022</div>
-                <div className="education-degree">Bachelor of Science in Computer Science</div>
-                <div className="education-school">University of Cape Town</div>
-                <div className="education-description">
-                  Focused on software engineering, web development, and database management. Completed coursework in
-                  algorithms, data structures, and software design patterns.
-                </div>
-              </div> */}
+            <section className="profile-section" aria-labelledby="education-heading">
+              <h3 id="education-heading" className="profile-section-title">Education</h3>
               <div className="education-item">
-                <div className="education-date">3 Months</div>
-                <div className="education-degree">Self Taught</div>
-                <div className="education-school">Solo Learn</div>
+                <div className="education-date">2023 - 2024</div>
+                <div className="education-degree">NQF Level 5: Systems Development</div>
+                <div className="education-school">Dynamic DNA</div>
                 <div className="education-description">
-                  Completed various online courses in web development, including HTML, CSS, JavaScript, and React, 
-                  python, java, sql and various other tools and languages all in a space of 3 months.
+                  Completed a comprehensive Systems Development qualification covering software engineering principles, 
+                  programming languages (Java, C#), web development technologies, database management, and software 
+                  design patterns. This qualification provided a solid foundation in full-stack development and 
+                  enterprise software solutions.
                 </div>
               </div>
               <div className="education-item">
@@ -148,13 +144,14 @@ import {
                 <div className="education-degree">High School Diploma</div>
                 <div className="education-school">Lamula Jubilee Secondary School</div>
                 <div className="education-description">
-                  Graduated with from the school, participated in various extracurricular activities.
+                  Completed high school education with a focus on mathematics and science.
+                  Actively participated in various extracurricular activities and leadership roles.
                 </div>
               </div>
-            </div>
+            </section>
   
-            <div className="profile-section">
-              <h3 className="profile-section-title">Certifications</h3>
+            <section className="profile-section" aria-labelledby="certifications-heading">
+              <h3 id="certifications-heading" className="profile-section-title">Certifications</h3>
               <div className="certifications-list">
                 <div className="certification-item">
                   <FaCertificate className="certification-icon" />
@@ -207,14 +204,14 @@ import {
                 </div>
                 
               </div>
-            </div>
+            </section>
   
          <br />
          <br />
          <br />
           </div>
         </div>
-      </div>
+      </section>
     )
   }
   

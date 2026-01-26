@@ -150,8 +150,10 @@ const Contact = () => {
       <div className="contact-content">
         <div className="contact-info">
           <p className="contact-text">
-            I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision. Feel
-            free to contact me using your preferred method.
+            I'm always open to discussing new projects, creative ideas, or opportunities
+            to be part of your vision. Whether you're looking for a developer to join your
+            team or need assistance with a project, feel free to reach out using your
+            preferred method.
           </p>
 
           <div className="contact-methods">

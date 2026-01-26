@@ -333,21 +333,22 @@ const Home = () => {
   }, [])
 
   return (
-    <div
+    <section
       id="homeSection"
       className={`homeScreen ${rgbActive ? "rgb-active" : ""}`}
       style={{ "--rgb-position": `${rgbPosition}deg` }}
+      aria-label="Home section"
     >
       <main className="main-content">
         <div className="left-section">
           <h1 className="name">
             Hi, I'm <span className="highlight">Xoli</span> Nxiweni
           </h1>
-          <h2 className="title">A Software Developer</h2>
+          <h2 className="title">Software Engineer</h2>
           <p className="bio">
-            I'm a Full-Stack developer focusing on MERN stack. I build
-            innovative solutions with clean, efficient code and a focus on data
-            integrity, user experience along with user-friendly interfaces.
+            I'm a Full-Stack Developer specializing in the MERN stack. I build
+            innovative solutions with clean, efficient code, prioritizing data
+            integrity and exceptional user experiences.
           </p>
           <div className="social-links">
             <a
@@ -408,20 +409,23 @@ const Home = () => {
             </a>
 
           </div>
-          <div className="tech-stack">
-            <h3>Tech Stack</h3>
-            <div className="tech-badges">
+          <section className="tech-stack" aria-labelledby="tech-stack-heading">
+            <h3 id="tech-stack-heading">Tech Stack</h3>
+            <div className="tech-badges" role="list" aria-label="Technologies and tools used">
               {techStack.map((tech, index) => (
-                <span key={index} className="tech-badge">
+                <span key={index} className="tech-badge" role="listitem">
                   <img
                     src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}.svg`}
-                    alt={tech.name}
+                    alt={`${tech.name} technology icon`}
                     className="tech-badge-icon"
+                    loading="lazy"
+                    width="40"
+                    height="40"
                   />
                 </span>
               ))}
             </div>
-          </div>
+          </section>
         </div>
 
         <div className="right-section">
@@ -519,7 +523,10 @@ const Home = () => {
                   >
                     <img
                       src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon.icon}.svg`}
-                      alt={icon.name}
+                      alt={`${icon.name} technology icon in orbital animation`}
+                      loading="lazy"
+                      width={icon.size}
+                      height={icon.size}
                     />
                   </div>
                 );
@@ -535,7 +542,7 @@ const Home = () => {
         onClose={() => setIsResumeViewerOpen(false)}
         resumeUrl={Resume}
       />
-    </div>
+    </section>
   );
 }
 

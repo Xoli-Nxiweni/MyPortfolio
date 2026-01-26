@@ -22,8 +22,8 @@ const Footer = () => {
               <span className="footer-logo-text">Xoli Nxiweni</span>
             </div>
             <p className="footer-description">
-              A Software Engineer focused on creating clean, efficient, and user-friendly web
-              applications.
+              Full Stack Software Engineer specializing in MERN stack development,
+              creating clean, efficient, and user-friendly web and mobile applications.
             </p>
             <div className="footer-social">
               <a

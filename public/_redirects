@@ -1,0 +1,4 @@
+# Render redirects file
+# This ensures all routes work correctly for a SPA
+
+/*    /index.html   200

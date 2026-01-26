@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Testing Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ddd;
+            padding-left: 15px;
+        }
+        .pass { border-left-color: #4CAF50; }
+        .fail { border-left-color: #f44336; }
+        .warning { border-left-color: #ff9800; }
+        button {
+            background: #00ed64;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00c854;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 SEO Testing Checklist</h1>
+    <p>Use this page to test your portfolio's SEO. Open your portfolio in another tab and run these tests.</p>
+
+    <div class="test-section">
+        <h2>1. Quick Visual Checks</h2>
+        <div class="test-item">
+            <strong>✅ View Page Source</strong>
+            <p>Right-click → "View Page Source" and check:</p>
+            <ul>
+                <li>Meta description is present and descriptive</li>
+                <li>Title tag is optimized (50-60 characters)</li>
+                <li>Structured data (JSON-LD) is present</li>
+                <li>Canonical URL is set</li>
+            </ul>
+            <button onclick="window.open('view-source:' + prompt('Enter your portfolio URL:', 'http://localhost:5173'), '_blank')">Open Page Source</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Browser DevTools Testing</h2>
+        <div class="test-item">
+            <strong>✅ Chrome Lighthouse Audit</strong>
+            <ol>
+                <li>Open your portfolio in Chrome</li>
+                <li>Press <code>F12</code> to open DevTools</li>
+                <li>Go to <strong>"Lighthouse"</strong> tab</li>
+                <li>Select <strong>"SEO"</strong> checkbox</li>
+                <li>Click <strong>"Analyze page load"</strong></li>
+                <li>Target: <strong>Score 90+</strong></li>
+            </ol>
+            <p><strong>What to check:</strong></p>
+            <ul>
+                <li>✅ Document has a meta description</li>
+                <li>✅ Document has a valid hreflang</li>
+                <li>✅ Links are crawlable</li>
+                <li>✅ Image elements have [alt] attributes</li>
+                <li>✅ Page has successful HTTP status code</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Online Testing Tools</h2>
+        <div class="test-item">
+            <h3>Structured Data Testing</h3>
+            <button onclick="window.open('https://validator.schema.org/', '_blank')">Schema.org Validator</button>
+            <button onclick="window.open('https://search.google.com/test/rich-results', '_blank')">Google Rich Results Test</button>
+            <p>Enter your URL and check for errors</p>
+        </div>
+        
+        <div class="test-item">
+            <h3>Meta Tags & SEO</h3>
+            <button onclick="window.open('https://metatags.io/', '_blank')">Meta Tags Preview</button>
+            <button onclick="window.open('https://seositecheckup.com/', '_blank')">SEO Site Checkup</button>
+            <button onclick="window.open('https://www.opengraph.xyz/', '_blank')">Open Graph Preview</button>
+        </div>
+
+        <div class="test-item">
+            <h3>Mobile & Performance</h3>
+            <button onclick="window.open('https://pagespeed.web.dev/', '_blank')">PageSpeed Insights</button>
+            <button onclick="window.open('https://search.google.com/test/mobile-friendly', '_blank')">Mobile-Friendly Test</button>
+        </div>
+
+        <div class="test-item">
+            <h3>Social Media Preview</h3>
+            <button onclick="window.open('https://developers.facebook.com/tools/debug/', '_blank')">Facebook Debugger</button>
+            <button onclick="window.open('https://cards-dev.twitter.com/validator', '_blank')">Twitter Card Validator</button>
+            <button onclick="window.open('https://www.linkedin.com/post-inspector/', '_blank')">LinkedIn Inspector</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Sitemap & Robots.txt Testing</h2>
+        <div class="test-item">
+            <p>Test these URLs (replace with your domain):</p>
+            <ul>
+                <li><code>https://xolinxiweni.com/sitemap.xml</code></li>
+                <li><code>https://xolinxiweni.com/robots.txt</code></li>
+            </ul>
+            <button onclick="testSitemap()">Test Sitemap</button>
+            <button onclick="testRobots()">Test Robots.txt</button>
+            <div id="sitemap-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Manual Checklist</h2>
+        <div class="test-item">
+            <h3>Meta Tags ✅</h3>
+            <input type="checkbox" id="meta-title"> Title tag is optimized (50-60 chars)<br>
+            <input type="checkbox" id="meta-desc"> Meta description is present (150-160 chars)<br>
+            <input type="checkbox" id="meta-keywords"> Keywords meta tag included<br>
+            <input type="checkbox" id="meta-og"> Open Graph tags present<br>
+            <input type="checkbox" id="meta-twitter"> Twitter Card tags present<br>
+            <input type="checkbox" id="meta-canonical"> Canonical URL set<br>
+        </div>
+
+        <div class="test-item">
+            <h3>Structured Data ✅</h3>
+            <input type="checkbox" id="schema-person"> Person schema present<br>
+            <input type="checkbox" id="schema-website"> WebSite schema present<br>
+            <input type="checkbox" id="schema-service"> ProfessionalService schema present<br>
+        </div>
+
+        <div class="test-item">
+            <h3>Content ✅</h3>
+            <input type="checkbox" id="content-h1"> One H1 tag per page<br>
+            <input type="checkbox" id="content-headings"> Proper heading hierarchy (H1 → H2 → H3)<br>
+            <input type="checkbox" id="content-alt"> All images have alt text<br>
+            <input type="checkbox" id="content-semantic"> Semantic HTML used (section, header, main, footer)<br>
+        </div>
+
+        <div class="test-item">
+            <h3>Technical ✅</h3>
+            <input type="checkbox" id="tech-sitemap"> Sitemap.xml exists and is valid<br>
+            <input type="checkbox" id="tech-robots"> Robots.txt exists and is valid<br>
+            <input type="checkbox" id="tech-mobile"> Mobile-responsive design<br>
+            <input type="checkbox" id="tech-speed"> Page loads quickly (< 3 seconds)<br>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>6. Quick Test Script</h2>
+        <div class="test-item">
+            <p>Enter your portfolio URL and test basic SEO elements:</p>
+            <input type="text" id="test-url" placeholder="http://localhost:5173" style="width: 300px; padding: 8px;">
+            <button onclick="runQuickTest()">Run Quick Test</button>
+            <div id="quick-test-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        function testSitemap() {
+            const url = prompt('Enter your sitemap URL:', 'http://localhost:5173/sitemap.xml');
+            if (url) {
+                window.open(url, '_blank');
+                document.getElementById('sitemap-result').style.display = 'block';
+                document.getElementById('sitemap-result').innerHTML = 
+                    '<strong>Testing:</strong> ' + url + '<br>' +
+                    'Check if XML is valid and all URLs are correct.';
+            }
+        }
+
+        function testRobots() {
+            const url = prompt('Enter your robots.txt URL:', 'http://localhost:5173/robots.txt');
+            if (url) {
+                window.open(url, '_blank');
+                document.getElementById('sitemap-result').style.display = 'block';
+                document.getElementById('sitemap-result').innerHTML = 
+                    '<strong>Testing:</strong> ' + url + '<br>' +
+                    'Verify robots.txt content is correct.';
+            }
+        }
+
+        async function runQuickTest() {
+            const url = document.getElementById('test-url').value || 'http://localhost:5173';
+            const resultDiv = document.getElementById('quick-test-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p>Testing... Please wait</p>';
+
+            try {
+                const response = await fetch(url);
+                const html = await response.text();
+                
+                const tests = {
+                    'Title Tag': /<title>(.*?)<\/title>/i.test(html),
+                    'Meta Description': /<meta\s+name=["']description["']/i.test(html),
+                    'Open Graph': /<meta\s+property=["']og:/i.test(html),
+                    'Structured Data': /<script\s+type=["']application\/ld\+json["']/i.test(html),
+                    'Canonical URL': /<link\s+rel=["']canonical["']/i.test(html),
+                    'Sitemap Reference': /<link\s+rel=["']sitemap["']/i.test(html),
+                };
+
+                let results = '<h3>Test Results:</h3><ul>';
+                for (const [test, passed] of Object.entries(tests)) {
+                    results += `<li style="color: ${passed ? 'green' : 'red'}">
+                        ${passed ? '✅' : '❌'} ${test}: ${passed ? 'PASS' : 'FAIL'}
+                    </li>`;
+                }
+                results += '</ul>';
+
+                resultDiv.innerHTML = results;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}<br>
+                    Make sure your dev server is running and CORS allows this request.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

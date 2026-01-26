@@ -20,8 +20,10 @@ const ProjectCard = memo(({ project, openModal, index }) => (
     <div className="project-image" onClick={() => openModal(project)}>
       <img 
         src={project.image || "/placeholder.svg"} 
-        alt={project.title} 
-        loading="lazy" 
+        alt={`${project.title} - ${project.description.substring(0, 100)} project preview image`}
+        loading="lazy"
+        width="600"
+        height="400"
       />
       <div className="image-overlay">
         <span>View Details</span>
@@ -94,7 +96,10 @@ const ProjectModal = memo(({ selectedProject, closeModal, handleModalClick }) =>
         <div className="modal-image">
           <img 
             src={selectedProject.image || "/placeholder.svg"} 
-            alt={`${selectedProject.title} preview`}
+            alt={`${selectedProject.title} - Full project preview showing ${selectedProject.description.substring(0, 80)}`}
+            loading="lazy"
+            width="800"
+            height="500"
           />
         </div>
         <h2 id="modal-title" className="modal-title">{selectedProject.title}</h2>
@@ -199,13 +204,13 @@ const Projects = () => {
   });
 
   return (
-    <section className="projects-container" id="projectsSection">
-      <div className="projects-header">
-        <h2 className="section-title">My Projects</h2>
+    <section className="projects-container" id="projectsSection" aria-labelledby="projects-heading">
+      <header className="projects-header">
+        <h2 id="projects-heading" className="section-title">My Projects</h2>
         <p className="section-subtitle">
           A collection of my recent work showcasing web apps, mobile apps, and Java-based desktop software.
         </p>
-      </div>
+      </header>
 
       <div className="projects-filter">
         <div className="filter-categories" role="group" aria-label="Filter projects by category">
