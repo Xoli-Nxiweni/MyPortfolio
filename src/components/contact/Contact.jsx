@@ -16,30 +16,86 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState({ success: null, message: "" })
   const [validationErrors, setValidationErrors] = useState({})
+  const [touchedFields, setTouchedFields] = useState({})
   const [retryCount, setRetryCount] = useState(0)
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) {
+          return "Hey! Your name would be nice to know"
+        }
+        if (value.trim().length < 2) {
+          return "Name needs at least 2 characters (we're not that formal!)"
+        }
+        if (value.trim().length > 100) {
+          return "Whoa there! Keep it under 100 characters"
+        }
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
+          return "Names usually contain letters, spaces, hyphens, or apostrophes"
+        }
+        return null
+
+      case 'email':
+        if (!value.trim()) {
+          return "Email is missing! How else will I reach you?"
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(value)) {
+          return "That doesn't look like a valid email. Check for typos!"
+        }
+        // Check for common email issues
+        if (value.includes('..')) {
+          return "Double dots detected! Check your email address"
+        }
+        if (value.startsWith('.') || value.endsWith('.')) {
+          return "Email can't start or end with a dot"
+        }
+        return null
+
+      case 'subject':
+        if (!value.trim()) {
+          return "What's this message about? Give it a subject!"
+        }
+        if (value.trim().length < 3) {
+          return "Subject needs at least 3 characters (be a bit more specific!)"
+        }
+        if (value.trim().length > 200) {
+          return "Subject too long! Keep it concise (under 200 characters)"
+        }
+        return null
+
+      case 'message':
+        if (!value.trim()) {
+          return "Don't leave me hanging! What's your message?"
+        }
+        if (value.trim().length < 10) {
+          return `Message too short! You've got ${value.trim().length} characters, need at least 10`
+        }
+        if (value.trim().length > 1000) {
+          return `That's a novel! Keep it under 1000 characters (you're at ${value.trim().length})`
+        }
+        return null
+
+      default:
+        return null
+    }
+  }
 
   const validateForm = () => {
     const errors = {}
-    
-    if (!formData.name.trim() || formData.name.length < 2) {
-      errors.name = "Name must be at least 2 characters long"
-    }
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      errors.email = "Please enter a valid email address"
-    }
-    
-    if (!formData.subject.trim() || formData.subject.length < 3) {
-      errors.subject = "Subject must be at least 3 characters long"
-    }
-    
-    if (!formData.message.trim() || formData.message.length < 10) {
-      errors.message = "Message must be at least 10 characters long"
-    }
-    
+    let isValid = true
+
+    Object.keys(formData).forEach((field) => {
+      const error = validateField(field, formData[field])
+      if (error) {
+        errors[field] = error
+        isValid = false
+      }
+    })
+
     setValidationErrors(errors)
-    return Object.keys(errors).length === 0
+    return isValid
   }
 
   const handleChange = (e) => {
@@ -49,13 +105,29 @@ const Contact = () => {
       [name]: value,
     }))
     
-    // Clear validation error for this field when user types
-    if (validationErrors[name]) {
+    // Real-time validation for touched fields
+    if (touchedFields[name]) {
+      const error = validateField(name, value)
       setValidationErrors((prev) => ({
         ...prev,
-        [name]: undefined
+        [name]: error || undefined
       }))
     }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setTouchedFields((prev) => ({
+      ...prev,
+      [name]: true
+    }))
+    
+    // Validate on blur
+    const error = validateField(name, value)
+    setValidationErrors((prev) => ({
+      ...prev,
+      [name]: error || undefined
+    }))
   }
   
   const openMailtoFallback = () => {
@@ -69,12 +141,26 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
+    // Mark all fields as touched
+    const allFieldsTouched = {}
+    Object.keys(formData).forEach((field) => {
+      allFieldsTouched[field] = true
+    })
+    setTouchedFields(allFieldsTouched)
+    
     // Validate form
     if (!validateForm()) {
       setSubmitStatus({ 
         success: false, 
-        message: "Please fix the errors in the form before submitting." 
+        message: "Oops! Please fix the errors above before sending." 
       })
+      // Scroll to first error
+      const firstErrorField = Object.keys(validationErrors)[0]
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField)
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        element?.focus()
+      }
       return
     }
     
@@ -248,14 +334,12 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`form-input ${validationErrors.name ? 'error' : ''}`}
-                required
+                onBlur={handleBlur}
+                className={`form-input ${validationErrors.name ? 'error' : touchedFields.name && !validationErrors.name ? 'valid' : ''}`}
                 disabled={isSubmitting}
                 aria-required="true"
                 aria-invalid={!!validationErrors.name}
                 aria-describedby={validationErrors.name ? "name-error" : undefined}
-                minLength="2"
-                maxLength="100"
               />
               {validationErrors.name && (
                 <span id="name-error" className="field-error" role="alert">
@@ -273,8 +357,8 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`form-input ${validationErrors.email ? 'error' : ''}`}
-                required
+                onBlur={handleBlur}
+                className={`form-input ${validationErrors.email ? 'error' : touchedFields.email && !validationErrors.email ? 'valid' : ''}`}
                 disabled={isSubmitting}
                 aria-required="true"
                 aria-invalid={!!validationErrors.email}
@@ -296,14 +380,12 @@ const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`form-input ${validationErrors.subject ? 'error' : ''}`}
-                required
+                onBlur={handleBlur}
+                className={`form-input ${validationErrors.subject ? 'error' : touchedFields.subject && !validationErrors.subject ? 'valid' : ''}`}
                 disabled={isSubmitting}
                 aria-required="true"
                 aria-invalid={!!validationErrors.subject}
                 aria-describedby={validationErrors.subject ? "subject-error" : undefined}
-                minLength="3"
-                maxLength="200"
               />
               {validationErrors.subject && (
                 <span id="subject-error" className="field-error" role="alert">
@@ -320,16 +402,19 @@ const Contact = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className={`form-textarea ${validationErrors.message ? 'error' : ''}`}
-                required
+                onBlur={handleBlur}
+                className={`form-textarea ${validationErrors.message ? 'error' : touchedFields.message && !validationErrors.message ? 'valid' : ''}`}
                 disabled={isSubmitting}
                 aria-required="true"
                 aria-invalid={!!validationErrors.message}
                 aria-describedby={validationErrors.message ? "message-error" : undefined}
-                minLength="10"
-                maxLength="1000"
                 rows="6"
               ></textarea>
+              {formData.message && (
+                <div className="character-count">
+                  {formData.message.trim().length}/1000 characters
+                </div>
+              )}
               {validationErrors.message && (
                 <span id="message-error" className="field-error" role="alert">
                   {validationErrors.message}
