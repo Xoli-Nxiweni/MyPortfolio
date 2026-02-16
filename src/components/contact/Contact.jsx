@@ -318,7 +318,7 @@ const Contact = () => {
     if (!isValid) {
       setSubmitStatus({ 
         success: false, 
-        message: "🚨 Oops! Please fix the errors above before sending." 
+        message: "Oops! Please fix the errors before sending." 
       })
       // Scroll to first error
       const firstErrorField = Object.keys(errors)[0]
