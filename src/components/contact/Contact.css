@@ -240,13 +240,37 @@
     transition: all 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+    /* Autofill detection animation */
+    animation-name: onAutoFillStart;
+    animation-duration: 0.001s;
   }
 
   @media (min-width: 768px) {
     .form-input,
     .form-textarea {
       padding: 0.875rem 1.25rem;
+      font-size: 1rem;
     }
+  }
+
+  /* Autofill detection - browsers trigger this animation when autofilling */
+  @keyframes onAutoFillStart {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Style autofilled inputs */
+  .form-input:-webkit-autofill,
+  .form-input:-webkit-autofill:hover,
+  .form-input:-webkit-autofill:focus,
+  .form-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--surface) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
   
   .form-input:focus,
