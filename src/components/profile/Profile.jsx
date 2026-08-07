@@ -130,7 +130,7 @@ import {
               <h3 id="education-heading" className="profile-section-title">Education</h3>
               <div className="education-item">
                  <div className="education-item">
-                <div className="education-date">24 June 2026 - Present</div>
+                <div className="education-date">June 2026 - Present</div>
                 <div className="education-degree">NQF Level 4: Technical Support</div>
                 <div className="education-school">Secutel Technologies (Pty) Ltd — KVR Training</div>
                 <div className="education-description">
