@@ -12,22 +12,24 @@ const About = () => {
       <div className="about-content">
         <div className="about-text">
           <p>
-            I'm Xolile Nxiweni, a dedicated Software Developer specializing in
-            building modern web and mobile applications. My journey in software
-            development has been driven by a passion for creating elegant and
-            effective solutions to complex problems.
+            {/* I'm Xolile Nxiweni, an Infrastructure-Aware Full Stack Systems Engineer
+            who pairs but not limited to MERN stack, React Native and enterprise software engineering with
+            hands-on IT support and network administration. */}
+            I'm Xolile Nxiweni, an Infrastructure-Aware Full-Stack Systems Engineer. While I have deep production 
+            experience with modern ecosystems like the MERN stack and React Native, my core capability lies in bridging 
+            versatile software engineering principles with hands-on network administration and IT infrastructure.
           </p>
           <p>
-            I specialize in full-stack development using the MERN stack (MongoDB,
-            Express, React, Node.js), and continuously expand my expertise in
-            emerging technologies. I am committed to writing clean, maintainable
-            code and delivering intuitive user experiences that drive business value.
+            I design and deliver web and mobile solutions with an operational
+            understanding of server infrastructure, firewall rules, IP routing,
+            DNS resolution, and network topology. This makes me a stronger
+            developer and a better partner for corporate teams that require
+            resilient, secure systems.
           </p>
           <p>
-            Beyond coding, I actively explore new technologies and deepen my
-            knowledge through technical documentation and hands-on practice. I am
-            passionate about continuous learning and professional growth in the
-            ever-evolving field of software development.
+            My NQF Level 4 Technical Support qualification provides a strong foundation in Network Architecture and Systems Support. 
+            This ensures I build applications with deep structural awareness of network topologies, firewalls, and endpoint operations, 
+            while maintaining the practical capability to troubleshoot hardware, operating systems, and enterprise infrastructure.
           </p>
         </div>
         <div className="about-image">
@@ -100,6 +102,29 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+          >
+            <div className="skill-header">
+              <div className="skill-icon">
+                <FaServer />
+              </div>
+              <h4 className="skill-title">Infrastructure</h4>
+            </div>
+            <ul className="skill-list">
+              <li className="skill-item">Technical Support & Network Architecture Modules</li>
+              <li className="skill-item">IP routing & DNS awareness</li>
+              <li className="skill-item">Firewall and endpoint operations</li>
+              <li className="skill-item">Hardware & OS troubleshooting</li>
+              <li className="skill-item">Infrastructure-aware app delivery</li>
+            </ul>
+          </motion.div>
+
+          <motion.div 
+            className="skill-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="skill-header">
@@ -183,7 +208,7 @@ const About = () => {
             </div>
             <ul className="skill-list">
               <li className="skill-item">Agile Methodology</li>
-              {/* <li className="skill-item">CI/CD</li> */}
+              <li className="skill-item">CI/CD</li>
               <li className="skill-item">
                 Testing (Jest, React Testing Library)
               </li>
@@ -198,6 +223,26 @@ const About = () => {
         <h3 id="experience-heading" className="section-title">Experience</h3>
 
         <div className="timeline">
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-content">
+              <div className="timeline-date">June 2026 - Present</div>
+              <h4 className="timeline-title">IT Technician</h4>
+              <div className="timeline-company">Secutel Technologies (Pty) Ltd</div>
+              <p className="timeline-description">
+                Infrastructure Operations: Manage network administration, firewall configurations, 
+                server troubleshooting, IP routing, and DNS operations to maintain high system uptime.
+                <br/>
+                <br/>
+                Secure Architecture: Integrate foundational network security principles into the development 
+                lifecycle, ensuring web applications and APIs are protected against vulnerabilities before deployment.
+                <br/>
+                <br/>
+                Systems Support: Diagnose and resolve complex hardware, software, and connectivity issues across 
+                enterprise systems.
+              </p>
+            </div>
+          </div>
           <div className="timeline-item">
             <div className="timeline-dot"></div>
             <div className="timeline-content">

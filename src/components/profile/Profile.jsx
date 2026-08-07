@@ -41,7 +41,7 @@ import {
               </div>
               <div className="profile-info">
                 <h3 className="profile-name">Xoli Nxiweni</h3>
-                <p className="profile-title">Software Engineer</p>
+                <p className="profile-title">Infrastructure-Aware Full Stack Engineer</p>
                 <div className="profile-details">
                   <div className="profile-detail">
                     <FaMapMarkerAlt className="detail-icon" />
@@ -129,6 +129,16 @@ import {
             <section className="profile-section" aria-labelledby="education-heading">
               <h3 id="education-heading" className="profile-section-title">Education</h3>
               <div className="education-item">
+                 <div className="education-item">
+                <div className="education-date">24 June 2026 - Present</div>
+                <div className="education-degree">NQF Level 4: Technical Support</div>
+                <div className="education-school">Secutel Technologies (Pty) Ltd — KVR Training</div>
+                <div className="education-description">
+                  Currently training in Technical Support and Network Architecture through KVR Training at Secutel Technologies.
+                  The program covers hardware and OS troubleshooting, IP routing, DNS, firewalls, network topology, and systems operations.
+                  This active training strengthens my infrastructure-aware approach to software delivery and operational resilience.
+                </div>
+              </div>
                 <div className="education-date">2023 - 2024</div>
                 <div className="education-degree">NQF Level 5: Systems Development</div>
                 <div className="education-school">Dynamic DNA</div>
@@ -139,6 +149,7 @@ import {
                   enterprise software solutions.
                 </div>
               </div>
+             
               <div className="education-item">
                 <div className="education-date">2011 - 2016</div>
                 <div className="education-degree">High School Diploma</div>

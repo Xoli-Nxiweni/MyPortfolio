@@ -36,95 +36,113 @@ const Home = () => {
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false)
 
   const codeSamples = {
-    javascript: `class Developer {
+    javascript: `class InfrastructureAwareEngineer {
   constructor() {
     this.name = 'Xoli Nxiweni';
-    this.role = 'Software Developer';
-    this.skills = [
-      'MERN Stack',
-      'React Native',
-      'Firebase',
-      'Redux'
-    ];
+    this.title = 'Infrastructure-Aware Full Stack Systems Engineer';
+    this.company = 'Secutel Technologies';
+    this.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#'];
+    this.infrastructure = ['IP routing', 'DNS', 'firewalls', 'network topology', 
+    'hardware troubleshooting'];
   }
-  buildSolution() {
-    return 'Innovative & Efficient';
+
+  deploySolution() {
+    return 'Secure, scalable, operations-aligned systems';
   }
 }`,
-    typescript: `class Developer {
+    typescript: `class InfrastructureAwareEngineer {
   name: string;
-  role: string;
-  skills: string[];
+  title: string;
+  company: string;
+  stack: string[];
+  infrastructure: string[];
 
   constructor() {
     this.name = 'Xoli Nxiweni';
-    this.role = 'Software Developer';
-    this.skills = [
-      'MERN Stack', 
-      'React Native',
-      'Firebase',
-      'Redux'
-    ];
+    this.title = 'Infrastructure-Aware Full Stack Systems Engineer';
+    this.company = 'Secutel Technologies';
+    this.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#'];
+    this.infrastructure = ['IP routing', 'DNS', 'firewalls', 'network topology', 'hardware troubleshooting'];
   }
 
-  buildSolution(): string {
-    return 'Innovative & Efficient';
+  deploySolution(): string {
+    return 'Secure, scalable, operations-aligned systems';
   }
 }`,
-    java: `public class Developer {
+    java: `public class InfrastructureAwareEngineer {
   private String name;
-  private String role;
-  private String[] skills;
+  private String title;
+  private String company;
+  private String[] stack;
+  private String[] infrastructure;
 
-  public Developer() {
+  public InfrastructureAwareEngineer() {
     this.name = "Xoli Nxiweni";
-    this.role = "Software Developer";
-    this.skills = new String[] {
-      "MERN Stack", 
+    this.title = "Infrastructure-Aware Full Stack Systems Engineer";
+    this.company = "Secutel Technologies";
+    this.stack = new String[] {
+      "MERN",
       "React Native",
-      "Firebase",
-      "Redux"
+      "TypeScript",
+      "Java",
+      "C#"
+    };
+    this.infrastructure = new String[] {
+      "IP routing",
+      "DNS",
+      "firewalls",
+      "network topology",
+      "hardware troubleshooting"
     };
   }
 
-  public String buildSolution() {
-    return "Innovative & Efficient";
+  public String deploySolution() {
+    return "Secure, scalable, operations-aligned systems";
   }
 }`,
-    python: `class Developer:
+    python: `class InfrastructureAwareEngineer:
   def __init__(self):
     self.name = 'Xoli Nxiweni'
-    self.role = 'Software Developer'
-    self.skills = [
-      'MERN Stack', 
-      'React Native',
-      'Firebase',
-      'Redux'
-    ]
-  
-  def build_solution(self):
-    return 'Innovative & Efficient'`,
-    csharp: `public class Developer 
+    self.title = 'Infrastructure-Aware Full Stack Systems Engineer'
+    self.company = 'Secutel Technologies'
+    self.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#']
+    self.infrastructure = ['IP routing', 'DNS', 'firewalls']
+    self.infrastructure = ['network topology','hardware troubleshooting']
+
+  def deploy_solution(self):
+    return 'Secure, scalable, operations-aligned systems'`,
+    csharp: `public class InfrastructureAwareEngineer 
 {
   public string Name { get; set; }
-  public string Role { get; set; }
-  public List<string> Skills { get; set; }
+  public string Title { get; set; }
+  public string Company { get; set; }
+  public List<string> Stack { get; set; }
+  public List<string> Infrastructure { get; set; }
 
-  public Developer() 
+  public InfrastructureAwareEngineer() 
   {
     Name = "Xoli Nxiweni";
-    Role = "Software Developer";
-    Skills = new List<string> {
-      "MERN Stack",
+    Title = "Infrastructure-Aware Full Stack Systems Engineer";
+    Company = "Secutel Technologies";
+    Stack = new List<string> {
+      "MERN",
       "React Native",
-      "Firebase",
-      "Redux"
+      "TypeScript",
+      "Java",
+      "C#"
+    };
+    Infrastructure = new List<string> {
+      "IP routing",
+      "DNS",
+      "firewalls",
+      "network topology",
+      "hardware troubleshooting"
     };
   }
 
-  public string BuildSolution() 
+  public string DeploySolution() 
   {
-    return "Innovative & Efficient";
+    return "Secure, scalable, operations-aligned systems";
   }
 }`
   }
@@ -344,11 +362,16 @@ const Home = () => {
           <h1 className="name">
             Hi, I'm <span className="highlight">Xoli</span> Nxiweni
           </h1>
-          <h2 className="title">Software Engineer</h2>
+          <h2 className="title">Infrastructure-Aware Full Stack Systems Engineer</h2>
           <p className="bio">
-            I'm a Full-Stack Developer specializing in the MERN stack. I build
-            innovative solutions with clean, efficient code, prioritizing data
-            integrity and exceptional user experiences.
+            I am a Software Developer & an IT Technician ,
+            blending MERN stack and React Native development with practical
+            network & cloud administration, firewall, and server infrastructure experience.
+          </p>
+          <p className="bio">
+            My NQF Level 4 Technical Support foundation means I write application
+            code with operational awareness of IP routing, DNS, firewalls, and
+            network topology.
           </p>
           <div className="social-links">
             <a
