@@ -2,150 +2,97 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Prism from "prismjs"
-import "prismjs/themes/prism-tomorrow.css"
-import "prismjs/components/prism-typescript"
-import "prismjs/components/prism-java"
-import "prismjs/components/prism-python"
-import "prismjs/components/prism-csharp"
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaWhatsapp, FaInstagram, FaEye } from "react-icons/fa"
 import { FiMinimize2, FiMaximize2, FiX } from "react-icons/fi"
 import Resume from "../../assets/Xolile-Nxiweni-Resume-2025.pdf"
 import ResumeViewer from "../resume/ResumeViewer"
 import "./Home.css"
 
+const MATRIX_CHARS =
+  "アイウエオカキクケコサシスセソタチツテト0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+/**
+ * Drives a falling-character "matrix rain" animation on a canvas.
+ *
+ * `active` turns the loop on/off.
+ * `resetKey` should change whenever the underlying <canvas> DOM node
+ * might have been unmounted/remounted or otherwise needs a clean
+ * restart (closing/reopening the window, toggling fullscreen, etc) —
+ * without this, the effect wouldn't know to grab the fresh canvas
+ * node and would keep drawing to a detached one.
+ */
+function useMatrixRain(canvasRef, { active = true, color = "#00ed64", fontSize = 14, fps = 30, resetKey } = {}) {
+  useEffect(() => {
+    if (!active) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+
+    let drops = []
+    const frameSize = fontSize
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect()
+      const width = Math.max(1, Math.round(rect.width))
+      const height = Math.max(1, Math.round(rect.height))
+      if (canvas.width !== width) canvas.width = width
+      if (canvas.height !== height) canvas.height = height
+
+      const columns = Math.max(1, Math.floor(canvas.width / frameSize))
+      drops = new Array(columns).fill(0).map(() => Math.random() * -50)
+    }
+
+    // Clear any stale pixels left on this node before we start drawing.
+    resize()
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    const resizeObserver = new ResizeObserver(resize)
+    resizeObserver.observe(canvas)
+    window.addEventListener("resize", resize)
+
+    const draw = () => {
+      ctx.fillStyle = "rgba(13, 17, 23, 0.08)"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      ctx.fillStyle = color
+      ctx.font = `${frameSize}px "JetBrains Mono", monospace`
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)]
+        const x = i * frameSize
+        const y = drops[i] * frameSize
+
+        ctx.fillText(char, x, y)
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0
+        }
+        drops[i]++
+      }
+    }
+
+    const interval = setInterval(draw, 1000 / fps)
+
+    return () => {
+      clearInterval(interval)
+      resizeObserver.disconnect()
+      window.removeEventListener("resize", resize)
+    }
+  }, [canvasRef, active, color, fontSize, fps, resetKey])
+}
+
 const Home = () => {
   const [isClosed, setIsClosed] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState("javascript")
   const [techIcons, setTechIcons] = useState([])
   const [rgbPosition, setRgbPosition] = useState(0)
   const [rgbActive, setRgbActive] = useState(true)
   const codeWindowRef = useRef(null)
-  const codeDisplayRef = useRef(null)
-  
-  // States for typing effect
-  const [displayedCode, setDisplayedCode] = useState('')
-  const [isTyping, setIsTyping] = useState(true) // Start with typing active
-  const [typingComplete, setTypingComplete] = useState(false)
-  const typingTimerRef = useRef(null)
-  const currentPosRef = useRef(0) // To track typing position between renders
-  
+  const matrixCanvasRef = useRef(null)
+
   // State for resume viewer
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false)
-
-  const codeSamples = {
-    javascript: `class InfrastructureAwareEngineer {
-  constructor() {
-    this.name = 'Xoli Nxiweni';
-    this.title = 'Infrastructure-Aware Full Stack Systems Engineer';
-    this.company = 'Secutel Technologies';
-    this.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#'];
-    this.infrastructure = ['IP routing', 'DNS', 'firewalls', 'network topology', 
-    'hardware troubleshooting'];
-  }
-
-  deploySolution() {
-    return 'Secure, scalable, operations-aligned systems';
-  }
-}`,
-    typescript: `class InfrastructureAwareEngineer {
-  name: string;
-  title: string;
-  company: string;
-  stack: string[];
-  infrastructure: string[];
-
-  constructor() {
-    this.name = 'Xoli Nxiweni';
-    this.title = 'Infrastructure-Aware Full Stack Systems Engineer';
-    this.company = 'Secutel Technologies';
-    this.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#'];
-    this.infrastructure = ['IP routing', 'DNS', 'firewalls', 'network topology', 'hardware troubleshooting'];
-  }
-
-  deploySolution(): string {
-    return 'Secure, scalable, operations-aligned systems';
-  }
-}`,
-    java: `public class InfrastructureAwareEngineer {
-  private String name;
-  private String title;
-  private String company;
-  private String[] stack;
-  private String[] infrastructure;
-
-  public InfrastructureAwareEngineer() {
-    this.name = "Xoli Nxiweni";
-    this.title = "Infrastructure-Aware Full Stack Systems Engineer";
-    this.company = "Secutel Technologies";
-    this.stack = new String[] {
-      "MERN",
-      "React Native",
-      "TypeScript",
-      "Java",
-      "C#"
-    };
-    this.infrastructure = new String[] {
-      "IP routing",
-      "DNS",
-      "firewalls",
-      "network topology",
-      "hardware troubleshooting"
-    };
-  }
-
-  public String deploySolution() {
-    return "Secure, scalable, operations-aligned systems";
-  }
-}`,
-    python: `class InfrastructureAwareEngineer:
-  def __init__(self):
-    self.name = 'Xoli Nxiweni'
-    self.title = 'Infrastructure-Aware Full Stack Systems Engineer'
-    self.company = 'Secutel Technologies'
-    self.stack = ['MERN', 'React Native', 'TypeScript', 'Java', 'C#']
-    self.infrastructure = ['IP routing', 'DNS', 'firewalls']
-    self.infrastructure = ['network topology','hardware troubleshooting']
-
-  def deploy_solution(self):
-    return 'Secure, scalable, operations-aligned systems'`,
-    csharp: `public class InfrastructureAwareEngineer 
-{
-  public string Name { get; set; }
-  public string Title { get; set; }
-  public string Company { get; set; }
-  public List<string> Stack { get; set; }
-  public List<string> Infrastructure { get; set; }
-
-  public InfrastructureAwareEngineer() 
-  {
-    Name = "Xoli Nxiweni";
-    Title = "Infrastructure-Aware Full Stack Systems Engineer";
-    Company = "Secutel Technologies";
-    Stack = new List<string> {
-      "MERN",
-      "React Native",
-      "TypeScript",
-      "Java",
-      "C#"
-    };
-    Infrastructure = new List<string> {
-      "IP routing",
-      "DNS",
-      "firewalls",
-      "network topology",
-      "hardware troubleshooting"
-    };
-  }
-
-  public string DeploySolution() 
-  {
-    return "Secure, scalable, operations-aligned systems";
-  }
-}`
-  }
 
   const techStack = [
     { name: "React", icon: "react/react-original" },
@@ -162,70 +109,6 @@ const Home = () => {
     { name: "GitHub", icon: "github/github-original" },
   ]
 
-  // Function to start typing animation
-  const startTypingAnimation = () => {
-    // Clear any existing typing timer
-    if (typingTimerRef.current) {
-      clearInterval(typingTimerRef.current)
-    }
-    
-    // Reset states
-    setDisplayedCode('')
-    setIsTyping(true)
-    setTypingComplete(false)
-    currentPosRef.current = 0
-    
-    // Get the code for the current language
-    const fullCode = codeSamples[currentLanguage]
-    
-    // Start the typing interval
-    typingTimerRef.current = setInterval(() => {
-      if (currentPosRef.current < fullCode.length) {
-        setDisplayedCode(fullCode.substring(0, currentPosRef.current + 1))
-        currentPosRef.current++
-      } else {
-        // Typing is complete
-        setIsTyping(false)
-        setTypingComplete(true)
-        clearInterval(typingTimerRef.current)
-      }
-    }, 10) // Faster typing speed (10ms)
-  }
-  
-  // Function to pause typing animation
-  const pauseTypingAnimation = () => {
-    if (typingTimerRef.current) {
-      clearInterval(typingTimerRef.current)
-      typingTimerRef.current = null
-    }
-  }
-  
-  // Function to resume typing animation
-  const resumeTypingAnimation = () => {
-    if (!typingComplete && typingTimerRef.current === null) {
-      const fullCode = codeSamples[currentLanguage]
-      
-      typingTimerRef.current = setInterval(() => {
-        if (currentPosRef.current < fullCode.length) {
-          setDisplayedCode(fullCode.substring(0, currentPosRef.current + 1))
-          currentPosRef.current++
-        } else {
-          // Typing is complete
-          setIsTyping(false)
-          setTypingComplete(true)
-          clearInterval(typingTimerRef.current)
-        }
-      }, 10)
-    }
-  }
-
-  const handleLanguageChange = (e) => {
-    const lang = e.target.value
-    setCurrentLanguage(lang)
-    // Start typing animation when language changes
-    startTypingAnimation()
-  }
-
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       codeWindowRef.current?.requestFullscreen()
@@ -237,63 +120,23 @@ const Home = () => {
         .catch(console.error)
     }
   }
-  
+
   const handleMinimize = () => {
-    if (!isMinimized) {
-      // If minimizing, pause the typing animation
-      pauseTypingAnimation()
-    } else {
-      // If maximizing, resume the typing animation if not complete
-      if (!typingComplete) {
-        resumeTypingAnimation()
-      }
-    }
-    setIsMinimized(!isMinimized)
+    setIsMinimized((prev) => !prev)
   }
 
-  // Start typing animation when component mounts
-  useEffect(() => {
-    if (!isClosed && !isMinimized) {
-      startTypingAnimation()
-    }
-    // Cleanup typing timer on unmount
-    return () => {
-      if (typingTimerRef.current) {
-        clearInterval(typingTimerRef.current)
-      }
-    }
-  }, [])
-
-  // Handle editor reopening
-  useEffect(() => {
-    if (!isClosed && !isMinimized) {
-      startTypingAnimation()
-    }
-  }, [isClosed])
-  
-  // Handle minimize/maximize state changes
-  useEffect(() => {
-    if (isMinimized) {
-      pauseTypingAnimation()
-    } else if (!isClosed && !typingComplete) {
-      resumeTypingAnimation()
-    }
-  }, [isMinimized, isClosed, typingComplete])
-
-  // Apply syntax highlighting to the displayed code
-  useEffect(() => {
-    if (codeDisplayRef.current && displayedCode) {
-      codeDisplayRef.current.innerHTML = Prism.highlight(
-        displayedCode,
-        Prism.languages[currentLanguage],
-        currentLanguage
-      )
-    }
-  }, [displayedCode, currentLanguage])
+  // Rain animation. resetKey forces a clean restart whenever the
+  // window is closed/reopened (the <canvas> node gets unmounted and a
+  // fresh one mounted), minimized/restored, or fullscreen is toggled.
+  // Now runs on mobile too — the window is no longer hidden below 768px.
+  useMatrixRain(matrixCanvasRef, {
+    active: !isClosed,
+    resetKey: `${isClosed}|${isMinimized}|${isFullscreen}`,
+  })
 
   // Monitor fullscreen changes
   useEffect(() => {
-    const handleFullscreenChange = () => 
+    const handleFullscreenChange = () =>
       setIsFullscreen(!!document.fullscreenElement)
     document.addEventListener("fullscreenchange", handleFullscreenChange)
     return () => document.removeEventListener("fullscreenchange", handleFullscreenChange)
@@ -336,7 +179,7 @@ const Home = () => {
   useEffect(() => {
     let animationFrameId
     const animate = () => {
-      setTechIcons((prevIcons) => 
+      setTechIcons((prevIcons) =>
         prevIcons.map((icon) => ({
           ...icon,
           angle: icon.angle + icon.speed,
@@ -413,7 +256,7 @@ const Home = () => {
             >
               <FaInstagram />
             </a>
-            <button
+            {/* <button
               onClick={() => setIsResumeViewerOpen(true)}
               title="View Resume"
               className="social-link resume-btn"
@@ -429,7 +272,7 @@ const Home = () => {
               aria-label="Download resume"
             >
               <FaDownload />
-            </a>
+            </a> */}
 
           </div>
           <section className="tech-stack" aria-labelledby="tech-stack-heading">
@@ -455,7 +298,7 @@ const Home = () => {
           <div className="hero-image">
             {!isClosed && (
               <div
-                className={`code-window ${isFullscreen ? "fullscreen" : ""}`}
+                className={`code-window ${isFullscreen ? "fullscreen" : ""} ${isMinimized ? "minimized" : ""}`}
                 ref={codeWindowRef}
               >
                 <div className="code-header">
@@ -479,30 +322,11 @@ const Home = () => {
                       <FiMaximize2 className="window-icon" />
                     </button>
                   </div>
-                  <div className="code-title">
-                    <select
-                      value={currentLanguage}
-                      onChange={handleLanguageChange}
-                    >
-                      <option value="javascript">JavaScript</option>
-                      <option value="typescript">TypeScript</option>
-                      <option value="java">Java</option>
-                      <option value="python">Python</option>
-                      <option value="csharp">C#</option>
-                    </select>
-                  </div>
+                  <div className="code-title">MATRIX</div>
                 </div>
-                {!isMinimized && (
-                  <div className="editor-container">
-                    <pre className="code-display">
-                      <code
-                        ref={codeDisplayRef}
-                        className={`language-${currentLanguage}`}
-                      />
-                      {isTyping && <span className="typing-cursor">|</span>}
-                    </pre>
-                  </div>
-                )}
+                <div className="editor-container">
+                  <canvas ref={matrixCanvasRef} className="matrix-canvas" aria-hidden="true" />
+                </div>
               </div>
             )}
             {isClosed && (
@@ -513,7 +337,7 @@ const Home = () => {
                   setIsMinimized(false);
                 }}
               >
-                Open Code Editor
+                Open The Matrix
               </button>
             )}
 

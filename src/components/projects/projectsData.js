@@ -1,5 +1,7 @@
 import ekasiToursHero from "../../assets/Screenshot (857).png"
 import spanaWebsiteHero from "../../assets/Screenshot (858).png"
+import acquaintanceEcommerceHero from "../../assets/Screenshot (1109).png"
+import cardGuessingGameHero from "../../assets/Screenshot (1111).png"
 
 export const projectsData = [
   {
@@ -108,13 +110,13 @@ export const projectsData = [
     id: 10,
     title: "Card Guessing Game",
     description:
-      "Interactive card game with animations, difficulty levels, and score tracking.",
+      "Interactive card game with animations and score tracking.",
     image:
-      "https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=1470&q=80",
+      cardGuessingGameHero,
     technologies: ["React.js", "JavaScript", "Node.js", "Game Development"],
     category: "Game",
-    demoLink: "https://github.com/Xoli-Nxiweni/ReactNodeCardGuessingGame",
-    codeLink: "https://github.com/Xoli-Nxiweni/ReactNodeCardGuessingGame"
+    demoLink: "https://reactnodecardguessinggame.onrender.com/",
+    codeLink: "https://github.com/Xoli-Nxiweni/ReactNodeCardGuessingGame_"
   },
   {
     id: 11,
@@ -127,18 +129,18 @@ export const projectsData = [
     category: "Console",
     codeLink: "https://github.com/Xoli-Nxiweni/NodeHosting"
   },
-  {
-    id: 12,
-    title: "My Portfolio",
-    description:
-      "Built this basic portfolio to showcase my skills and also learn from it.",
-    image:
-      "https://www.zu.ac.ae/main/en/iers/_images/capstone.jpg",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    category: "Web",
-    demoLink: "https://xoli-nxiweni.github.io/personalportfolio",
-    codeLink: "https://github.com/Xoli-Nxiweni/personalportfolio"
-  },
+  // {
+  //   id: 12,
+  //   title: "My Portfolio",
+  //   description:
+  //     "Built this basic portfolio to showcase my skills and also learn from it.",
+  //   image:
+  //     "https://www.zu.ac.ae/main/en/iers/_images/capstone.jpg",
+  //   technologies: ["HTML5", "CSS3", "JavaScript"],
+  //   category: "Web",
+  //   demoLink: "https://xoli-nxiweni.github.io/personalportfolio",
+  //   codeLink: "https://github.com/Xoli-Nxiweni/personalportfolio"
+  // },
   {
     id: 13,
     title: "SPANA Backend API",
@@ -171,5 +173,16 @@ export const projectsData = [
     category: "Web",
     demoLink: "https://spana-website.onrender.com/",
     codeLink: "https://github.com/Xoli-Nxiweni/spana-website"
+  },
+  {
+    id: 16,
+    title: "Acquaintance Apparel e-commerce Website",
+    description:
+      "A modern e-commerce platform for showcasing and selling products online. Features include product browsing and Favorites.",
+    image: acquaintanceEcommerceHero,
+    technologies: ["React", "Vite", "Node.js", "Express", "MongoDB", "Stripe", "Tailwind CSS"],
+    category: "Web",
+    demoLink: "https://acquaintance.onrender.com/",
+    codeLink: "https://github.com/Xoli-Nxiweni/Acquaintance"
   }
 ];

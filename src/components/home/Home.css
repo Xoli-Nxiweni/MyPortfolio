@@ -240,13 +240,13 @@ body {
 .hero-image {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 100%;
   aspect-ratio: 1;
 }
 
 .code-window {
   width: 100%;
-  height: 400px;
+  height: 100%;
   background-color: var(--darker-surface);
   border-radius: 0.75rem;
   overflow: hidden;
@@ -265,6 +265,14 @@ body {
   height: 100vh;
   border-radius: 0;
   z-index: 1000;
+}
+
+.code-window.minimized {
+  height: auto;
+}
+
+.code-window.minimized .editor-container {
+  display: none;
 }
 
 .code-header {
@@ -327,217 +335,19 @@ body {
   font-family: "JetBrains Mono", monospace;
 }
 
-.code-title select {
-  background-color: var(--dark-surface);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem;
-  cursor: pointer;
-  outline: none;
-}
-
-.code-title select:hover {
-  border-color: var(--primary-color);
-}
-
 .editor-container {
   position: relative;
   height: calc(100% - 3rem);
   overflow: hidden;
 }
 
-.code-display {
-  position: absolute;
-  top: 0;
-  left: 0;
+.matrix-canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 1rem;
   background-color: var(--darker-surface);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  tab-size: 2;
-  overflow: auto;
-  z-index: 1;
-  box-sizing: border-box;
 }
 
-.restore-btn {
-  background-color: var(--primary-color);
-  color: #0d1117;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-}
-
-.restore-btn:hover {
-  background-color: #00c456;
-  transform: translate(-50%, -50%) scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 237, 100, 0.3);
-}
-
-.orbital-tech-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 5;
-  overflow: visible;
-}
-
-.orbital-tech-icon {
-  position: absolute;
-  background-color: var(--dark-surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  will-change: transform;
-  z-index: 5;
-  transform-origin: center;
-}
-
-.orbital-tech-icon img {
-  width: 60%;
-  height: 60%;
-  transition: transform 0.3s ease;
-}
-
-.orbital-tech-icon:hover {
-  transform: scale(1.5) !important;
-  z-index: 6;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 20px rgba(0, 237, 100, 0.3);
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.orbital-tech-icon:hover img {
-  transform: rotate(360deg);
-}
-
-@media (max-width: 768px) {
-  .homeScreen {
-    padding: 1rem;
-  }
-
-  .name {
-    font-size: 2rem;
-  }
-
-  .title {
-    font-size: 1.25rem;
-  }
-
-  .bio {
-    font-size: 1rem;
-  }
-
-  .code-window {
-    height: 350px;
-  }
-
-  .orbital-tech-icon {
-    transform: scale(0.8);
-  }
-}
-
-@media (max-width: 480px) {
-  .code-window {
-    height: 300px;
-  }
-
-  .tech-badge {
-    width: 1.8rem;
-    height: 1.8rem;
-  }
-
-  .tech-badge-icon {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .orbital-tech-icon {
-    transform: scale(0.7);
-  }
-}
-
-/* Add these CSS rules to your existing Home.css file */
-
-/* Typing cursor animation */
-.typing-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.2em;
-  vertical-align: text-bottom;
-  background-color: #fff;
-  animation: cursor-blink 1s infinite;
-  margin-left: 2px;
-}
-
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* Ensure code editor displays properly in all states */
-.code-display {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 1rem;
-  background-color: var(--darker-surface);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  tab-size: 2;
-  overflow: auto;
-  z-index: 1;
-  box-sizing: border-box;
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Smooth transitions for editor visibility */
-.code-window {
-  width: 100%;
-  height: 400px;
-  background-color: var(--darker-surface);
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  z-index: 10;
-  position: relative;
-}
-
-/* Improved restore button */
 .restore-btn {
   background-color: var(--primary-color);
   color: #0d1117;
@@ -561,11 +371,17 @@ body {
   box-shadow: 0 4px 12px rgba(0, 237, 100, 0.3);
 }
 
-@media (max-width: 768px) {
-  .orbital-tech-container {
-    display: none;
-  }
+.orbital-tech-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
 }
+
 .orbital-tech-icon {
   position: absolute;
   background-color: var(--dark-surface);
@@ -602,7 +418,7 @@ body {
   transform: rotate(360deg) !important;
 }
 
-/* Add a glow effect for the icons */
+/* Glow effect for the icons */
 .orbital-tech-icon::after {
   content: "";
   position: absolute;
@@ -639,7 +455,7 @@ body {
   }
 }
 
-/* Add entrance animation for the icons */
+/* Entrance animation for the icons */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -658,4 +474,53 @@ body {
 
 .orbital-tech-container.animate .orbital-tech-icon {
   animation-play-state: running;
+}
+
+/* ---------------------------------------------------------------- */
+/* Mobile: the matrix window is now shown (previously dropped        */
+/* entirely below 768px). It's constrained to a smaller, centered    */
+/* square so it doesn't dominate the page next to the bio text.      */
+/* ---------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .right-section {
+    display: block;
+  }
+
+  .hero-image {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .homeScreen {
+    padding: 1rem;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .bio {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-image {
+    max-width: 100%;
+  }
+
+  .tech-badge {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .tech-badge-icon {
+    width: 1rem;
+    height: 1rem;
+  }
 }
